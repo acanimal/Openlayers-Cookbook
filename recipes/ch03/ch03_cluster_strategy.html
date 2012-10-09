@@ -1,0 +1,28 @@
+<!-- Map DOM element -->
+<div id="ch3_cluster" style="width: 100%; height: 100%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch3_cluster");    
+    
+    var layer = new OpenLayers.Layer.OSM("OpenStreetMap");
+    map.addLayer(layer);
+    
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+    map.setCenter(new OpenLayers.LonLat(0,0), 2);
+            
+    // World Cities
+    var citiesLayer = new OpenLayers.Layer.Vector("World Cities (GeoJSON)", {
+        protocol: new OpenLayers.Protocol.HTTP({
+            url: "http://localhost:8080/openlayers-cookbook/recipes/data/world_cities.json",
+            format: new OpenLayers.Format.GeoJSON()
+        }),
+        strategies: [
+            new OpenLayers.Strategy.Fixed(), 
+            new OpenLayers.Strategy.Cluster({distance: 15})
+        ]
+    });
+    map.addLayer(citiesLayer);
+</script>

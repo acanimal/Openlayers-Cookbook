@@ -1,0 +1,34 @@
+<!-- Map DOM element -->
+<div id="ch3_filtering_cql" style="width: 100%; height: 100%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+    OpenLayers.ProxyHost = "./utils/proxy.php?url=";
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch3_filtering_cql");    
+    
+    var baseLayer = new OpenLayers.Layer.OSM("OpenStreetMap");
+    map.addLayer(baseLayer);
+    
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+    var center = new OpenLayers.LonLat(-100, 41);
+    center.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+    map.setCenter(center, 4);
+    
+    // Create an OpenLayers.Filter object from a CQL string
+    var cqlFormat = new OpenLayers.Format.CQL();
+    var filter = cqlFormat.read("(MALE > '700000') AND (WITHIN(the_geom, POLYGON((-120 10,-120 50,-90 50,-90 10,-120 10))))")
+
+    // Filter features with the query.
+    var statesLayer = new OpenLayers.Layer.Vector("States", {
+        protocol: new OpenLayers.Protocol.WFS({
+            url: "http://demo.opengeo.org/geoserver/wfs",
+            featureType: "states",
+            featureNS: "http://www.openplans.org/topp"
+        }),
+        strategies: [new OpenLayers.Strategy.BBOX()],
+        filter: filter
+    });
+    map.addLayer(statesLayer);    
+</script>

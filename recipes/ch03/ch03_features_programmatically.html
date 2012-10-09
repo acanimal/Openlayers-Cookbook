@@ -1,0 +1,81 @@
+<!-- Map DOM element -->
+<div id="ch3_features_programmatically" style="width: 100%; height: 100%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch3_features_programmatically");    
+    
+    // Add a WMS layer
+    var wms = new OpenLayers.Layer.WMS("Basic", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: 'basic'
+    });
+    map.addLayer(wms);
+    
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+    map.setCenter(new OpenLayers.LonLat(0,0), 2);
+            
+    // Create some empty vector layers
+    var pointLayer = new OpenLayers.Layer.Vector("Points");
+    var lineLayer = new OpenLayers.Layer.Vector("Lines");
+    var polygonLayer = new OpenLayers.Layer.Vector("Polygon");
+    
+    // Add layers to the map
+    map.addLayers([polygonLayer, lineLayer, pointLayer]);
+    
+    // Fill layers
+    initializePointLayer();
+    initializeLineLayer();
+    initializePolygonLayer();
+    
+    // Create some random points.
+    function initializePointLayer() {
+        var pointFeatures = [];
+        for(var i=0; i< 50; i++) {
+            var px = Math.random()*360-180;
+            var py = Math.random()*180-90;
+
+            var pointGeometry = new OpenLayers.Geometry.Point(px, py);
+            var pointFeature = new OpenLayers.Feature.Vector(pointGeometry);
+            pointFeatures.push(pointFeature);
+        }
+        pointLayer.addFeatures(pointFeatures);
+    }
+    
+    // Create some random lines
+    function initializeLineLayer() {
+        for(var j=0; j< 2; j++) {
+            var pointGeometries = [];
+            for(var i=0; i< 10; i++) {
+                var px = Math.random()*240-120;
+                var py = Math.random()*100-50;
+
+                var pointGeometry = new OpenLayers.Geometry.Point(px, py);
+                pointGeometries.push(pointGeometry);
+            }
+            var lineGeometry = new OpenLayers.Geometry.LineString(pointGeometries);
+            var lineFeature = new OpenLayers.Feature.Vector(lineGeometry);
+            lineLayer.addFeatures(lineFeature);
+        }
+    }
+    
+    // Create some random polygons
+    function initializePolygonLayer() {
+        for(var j=0; j< 2; j++) {
+            var pointGeometries = [];
+            for(var i=0; i< 5; i++) {
+                var px = Math.random()*240-180;
+                var py = Math.random()*100-90;
+
+                var pointGeometry = new OpenLayers.Geometry.Point(px, py);
+                pointGeometries.push(pointGeometry);
+            }
+            var linearGeometry = new OpenLayers.Geometry.LinearRing(pointGeometries);
+            var polygonGeometry = new OpenLayers.Geometry.Polygon([linearGeometry]);
+            var polygonFeature = new OpenLayers.Feature.Vector(polygonGeometry);
+            polygonLayer.addFeatures(polygonFeature);
+        }
+    }
+</script>

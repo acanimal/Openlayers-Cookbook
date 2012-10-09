@@ -1,0 +1,16 @@
+<!-- Map DOM element -->
+<div id="ch1_simple_map" style="width: 100%; height: 95%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch1_simple_map");
+    
+    // Create an OpenStreeMap raster layer and add to the map
+    var osm = new OpenLayers.Layer.OSM();
+    map.addLayer(osm);
+    
+    // Set view to zoom maximum map extent
+    map.zoomToMaxExtent();
+</script>

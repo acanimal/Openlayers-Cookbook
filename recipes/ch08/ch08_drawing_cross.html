@@ -1,0 +1,44 @@
+<!-- Map DOM element -->
+<div id="ch08_drawing_cross" style="width: 100%; height: 95%;"></div>
+
+<script type="text/javascript" src="./recipes/ch08/crossControl.js"></script>
+
+<style>
+    .olControlCross {
+        width: 48px;
+        height: 48px;
+        background: url('./recipes/data/target.png') no-repeat;
+    }
+    .olControlCrossText {
+        position: relative;
+        top: -10px;
+        width: 200px;
+        color: black;
+    }
+</style>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch08_drawing_cross");
+    var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS",
+    "http://vmap0.tiles.osgeo.org/wms/vmap0", {layers: 'basic'} );
+    map.addLayer(layer);
+    
+    // Certer viewport
+    map.setCenter(new OpenLayers.LonLat(0,0), 2);
+        
+    // Add the cross control and activate it.
+    var crossControl = new OpenLayers.Control.Cross({
+        eventListeners: {
+            "crossClick": function(event) {
+                var lonlat = event.lonlat;
+                var message = "Clicked on: " + lonlat.lon + " / " + lonlat.lat;
+                alert(message);
+            }
+        }
+    });
+    map.addControl(crossControl);
+    crossControl.activate();
+</script>

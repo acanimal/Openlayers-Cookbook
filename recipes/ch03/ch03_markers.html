@@ -1,0 +1,89 @@
+<!-- Map DOM element -->
+<div id="ch3_markers" style="width: 100%; height: 100%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch3_markers");    
+    
+    var layer = new OpenLayers.Layer.OSM("OpenStreetMap");
+    map.addLayer(layer);
+    
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+    map.setCenter(new OpenLayers.LonLat(0,0), 2);
+            
+    var markers = new OpenLayers.Layer.Markers("Markers");
+    map.addLayer(markers);
+    
+    // Create some random markers with random icons
+    var icons = [
+        "alligator.png",
+        "chicken-2.png",
+        "elephants.png",       
+        "pets.png",
+        "snakes.png",
+        "wildlifecrossing.png",
+        "animal-shelter-export.png",
+        "cow-export.png",
+        "frog-2.png",
+        "pig.png",
+        "spider.png",
+        "zoo.png",
+        "ant-export.png",
+        "deer.png",
+        "lobster-export.png",
+        "rodent.png",
+        "tiger-2.png",
+        "bats.png",
+        "dolphins.png",
+        "monkey-export.png",
+        "seals.png",
+        "turtle-2.png",
+        "birds-2.png",
+        "duck-export.png",
+        "mosquito.png",
+        "shark-export.png",
+        "veterinary.png",
+        "butterfly-2.png",
+        "eggs.png",
+        "penguin-2.png",
+        "snail.png",
+        "whale-2.png"
+    ];
+    
+    for(var i=0; i< 150; i++) {
+        // Compute a random icon and lon/lat position.
+        var icon = Math.floor(Math.random() * icons.length);
+        var px = Math.random() * 360 - 180;
+        var py = Math.random() * 170 - 85;
+    
+        // Create size, pixel and icon instances
+        var size = new OpenLayers.Size(32, 37);
+        var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+        var icon = new OpenLayers.Icon('./recipes/data/icons/'+icons[icon], size, offset);
+        icon.setOpacity(0.7);
+        
+        // Create a lonlat instance and transform it to the map projection.
+        var lonlat = new OpenLayers.LonLat(px, py);
+        lonlat.transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
+        
+        // Add the marker
+        var marker = new OpenLayers.Marker(lonlat, icon);
+        
+        // Event to handler when the mouse is over
+        // Inflate the icon and change its opacity
+        marker.events.register("mouseover", marker, function() {
+            this.inflate(1.2);
+            this.setOpacity(1);
+        });
+        // Event to handler when the mouse is out
+        // Inflate the icon and change its opacity
+        marker.events.register("mouseout", marker, function() {
+            this.inflate(1/1.2);
+            this.setOpacity(0.7);
+        });
+        
+        markers.addMarker(marker);
+    }
+</script>

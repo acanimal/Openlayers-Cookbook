@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>OpenLayers Cookbook - Antonio Santiago</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <script type="text/javascript">
+            var djConfig = {
+                parseOnLoad: true,
+                isDebug: true
+            };
+        </script>
+
+        <script type="text/javascript" src="./js/dojo-release-1.7.2/dojo/dojo.js"></script>
+        <script type="text/javascript" src="./js/OpenLayers-2.11/lib/OpenLayers.js"></script>
+        <link rel="stylesheet" href="./js/OpenLayers-2.11/theme/default/style.css" type="text/css">
+        <link rel="stylesheet" href="./js/dojo-release-1.7.2/dijit/themes/claro/claro.css"/>
+        <link rel="stylesheet" href="./js/dojo-release-1.7.2/dijit/themes/claro/document.css"/>
+
+        <link rel="stylesheet" type="text/css" href="./css/cookbook.css"> 
+
+        <script type="text/javascript">
+            dojo.require("dijit.layout.BorderContainer");
+            dojo.require("dijit.layout.TabContainer");
+            dojo.require("dijit.layout.ContentPane");
+            dojo.require("dojox.layout.ContentPane");
+            dojo.require("dijit.Dialog");
+            dojo.require("dijit.MenuBar");
+            dojo.require("dijit.PopupMenuBarItem");
+            dojo.require("dijit.Menu");
+            dojo.require("dijit.MenuItem");
+            dojo.require("dijit.ProgressBar");
+            
+            dojo.require("dijit.form.NumberSpinner");
+            dojo.require("dijit.form.Button");
+            dojo.require("dijit.form.RadioButton");
+            dojo.require("dijit.form.ToggleButton");
+            dojo.require("dijit.form.Select");
+            dojo.require("dijit.form.CheckBox");
+            dojo.require("dijit.form.Textarea");
+            dojo.require("dijit.form.SimpleTextarea");
+            dojo.require("dijit.form.Slider");
+            dojo.require("dijit.form.HorizontalSlider");
+            dojo.require("dijit.form.NumberSpinner");
+            
+            dojo.require("dijit.Toolbar");
+            dojo.require("dijit.ToolbarSeparator");
+            dojo.require("dijit.form.DropDownButton");
+            dojo.require("dijit.DropDownMenu");
+            dojo.require("dijit.ColorPalette");
+    
+            // Once Dojo is loaded...
+            dojo.ready(function(){
+                // Initialize main menu
+                initMenu();
+            });
+
+            //
+            // Initialize menubar with the values of 'chapters' variable
+            //
+            function initMenu() {
+                var menubar = dijit.byId('navMenu');
+            
+                // Load chapters JSON file
+                var xhrArgs = {
+                    url: "./chapters.json",
+                    handleAs: "json",
+                    preventCache: true,
+                    load: function(chapters) {
+                        // Process chapters to create the menu
+                        dojo.forEach(chapters, function(chapter, i) {
+                            // Create new menu for the chapter
+                            var menu = new dijit.Menu({});
+                            var menubaritem = new dijit.PopupMenuBarItem({
+                                label: chapter.name,
+                                popup: menu
+                            });
+                    
+                            dojo.forEach(chapter.recipes, function(receipt, j) {
+                                // Create menu entry
+                                var menuitem = new dijit.MenuItem({
+                                    label: receipt.name,
+                                    receipt: receipt,
+                                    onClick: function(event) {
+                                        if(receipt.external) {
+                                            window.open(receipt.url, receipt.name);
+                                            return;
+                                        }
+                                        
+                                        var tabcontainer = dijit.byId('receiptTabs');
+                                        if(!isReceiptTabOpened(receipt.name)) {
+                                            
+                                            var nestedtab = new dijit.layout.TabContainer({
+                                                title: receipt.name,
+                                                closable: true,
+                                                nested: true
+                                            });
+
+                                            var resultPane = new dojox.layout.ContentPane({
+                                                title: "Result", 
+                                                closable: false,
+                                                preventCache: true,
+                                                href: receipt.url
+                                            });
+                                            
+                                            var codePane = new dijit.layout.ContentPane({
+                                                title: "code", 
+                                                closable: false,
+                                                preventCache: true,
+                                                receiptUrl: receipt.url,
+                                                style: "overflow: auto",
+                                                onShow: function() {
+                                                    if(!this.sourceCode) {
+                                                        dojo.xhrGet({
+                                                            url: this.receiptUrl,
+                                                            handleAs: "text",
+                                                            preventCache: true,
+                                                            load: dojo.hitch(this, function(data) {
+                                                                this.sourceCode = data;
+                                                                var textArea = new dijit.form.Textarea({value: data});
+                                                                this.set('content', textArea );
+                                                            }),
+                                                            error: function(error) {
+                                                                var dialog = new dijit.Dialog({
+                                                                    title: "Error !!!",
+                                                                    content: "Sorry there was an error loading the source code for this receipt.",
+                                                                    style: "width: 200px"
+                                                                });
+                                                                dialog.show();
+                                                            }
+                                                        });
+                                                    }
+                                                }
+                                            });
+                                            nestedtab.addChild(resultPane);
+                                            nestedtab.addChild(codePane);
+                                            tabcontainer.addChild(nestedtab);
+                                            tabcontainer.selectChild(nestedtab);
+                                        } else {
+                                            var receiptTab = getReceiptTab(receipt.name);
+                                            if(receiptTab) {
+                                                tabcontainer.selectChild(receiptTab);
+                                            }
+                                        }
+                                    }
+                                });
+                                menu.addChild(menuitem);
+                            });
+                            menubar.addChild(menubaritem);
+                        });
+                        
+                        dijit.byId('borderContainer').resize();
+                    },
+                    error: function(error) {
+                        var dialog = new dijit.Dialog({
+                            title: "Error !!!",
+                            content: "Sorry there was an error loading the JSON file with chapters.",
+                            style: "width: 200px"
+                        });
+                        dialog.show();
+                    }
+                }
+                var deferred = dojo.xhrGet(xhrArgs);
+            }
+            
+            //
+            // Check if the receipt tab with the given name is opened.
+            //
+            function isReceiptTabOpened(name) {
+                var tabcontainer = dijit.byId('receiptTabs');
+                var recipes = tabcontainer.getChildren();
+                for(var i=0; i< recipes.length; i++) {
+                    if(recipes[i].get('title') == name) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            
+            //
+            // Given a name returns a reference to the corresponding
+            // receipt tab.
+            //
+            function getReceiptTab(name) {
+                var tabcontainer = dijit.byId('receiptTabs');
+                var recipes = tabcontainer.getChildren();
+                for(var i=0; i< recipes.length; i++) {
+                    if(recipes[i].get('title') == name) {
+                        return recipes[i];
+                    }
+                }
+                return null;
+            }
+        </script>
+    </head>
+    <body class="claro">
+
+        <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="false" liveSplitters="true" id="borderContainer">
+            <div dojoType="dijit.layout.ContentPane" splitter="false" region="top">
+                <div dojoType="dijit.MenuBar" id="navMenu">
+                    <span class="bookTitle">OpenLayers Cookbook: </span>
+                </div>
+            </div>
+
+            <div dojoType="dijit.layout.ContentPane" splitter="true" region="center" style="width: 100%; height: 100%;">
+                <div id="receiptTabs" dojoType="dijit.layout.TabContainer" tabStrip="true" style="width: 100%; height: 100%;"></div>
+            </div>
+        </div>
+
+    </body>
+</html>

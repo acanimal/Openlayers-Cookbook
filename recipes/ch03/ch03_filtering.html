@@ -1,0 +1,45 @@
+<!-- Map DOM element -->
+<div id="ch3_filtering" style="width: 100%; height: 100%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    OpenLayers.ProxyHost = "./utils/proxy.php?url=";
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch3_filtering");    
+    
+    var baseLayer = new OpenLayers.Layer.OSM("OpenStreetMap");
+    map.addLayer(baseLayer);
+    
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+    var center = new OpenLayers.LonLat(-100, 41);
+    center.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+    map.setCenter(center, 4);
+    
+    // Filter features with the query.
+    var statesLayer = new OpenLayers.Layer.Vector("States", {
+        protocol: new OpenLayers.Protocol.WFS({
+            url: "http://demo.opengeo.org/geoserver/wfs",
+            featureType: "states",
+            featureNS: "http://www.openplans.org/topp"
+        }),
+        strategies: [new OpenLayers.Strategy.BBOX()],
+        filter: new OpenLayers.Filter.Logical({
+            type: OpenLayers.Filter.Logical.AND,
+            filters: [
+                new OpenLayers.Filter.Comparison({
+                    type: OpenLayers.Filter.Comparison.GREATER_THAN,
+                    property: "MALE",
+                    value: "700000"
+                }),
+                new OpenLayers.Filter.Spatial({
+                    type: OpenLayers.Filter.Spatial.WITHIN,
+                    value: OpenLayers.Bounds.fromArray([-120, 10,-90,50])
+                })
+            ]
+        })
+    });
+    map.addLayer(statesLayer);    
+    
+</script>

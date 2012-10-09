@@ -1,0 +1,56 @@
+<div id="ch07_styleMap" style="width: 100%; height: 95%;"></div>
+
+<script type="text/javascript">
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch07_styleMap");
+    
+    var osm = new OpenLayers.Layer.OSM();
+    map.addLayer(osm);
+    
+    map.setCenter(new OpenLayers.LonLat(0,0), 2)
+
+    // Create stylemap for the layer
+    var colors = ['#EBC137','#E38C2D','#DB4C2C','#771E10','#48110C'];
+    var style = OpenLayers.Util.extend({}, OpenLayers.Feature.Vector.style["default"]);
+    style.pointRadius = "${radius}";
+    style.fillColor = '${colorFunction}';
+    
+    var defaultStyle = new OpenLayers.Style(style, {
+        context: {
+            colorFunction: function(feature) {
+                return colors[feature.attributes.temp];
+            }
+        }
+    });
+
+    // Create the vector layer
+    var vectorLayer = new OpenLayers.Layer.Vector("Features", {
+        styleMap: new OpenLayers.StyleMap(defaultStyle)
+    });
+    map.addLayer(vectorLayer);
+    
+    // Create random feature points.
+    var pointFeatures = [];
+    for(var i=0; i< 150; i++) {
+        var px = Math.random() * 360 - 180;
+        var py = Math.random() * 170 - 85;
+    
+        // Create a lonlat instance and transform it to the map projection.
+        var lonlat = new OpenLayers.LonLat(px, py);
+        lonlat.transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
+        
+        var pointGeometry = new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat);
+        var pointFeature = new OpenLayers.Feature.Vector(pointGeometry);
+        
+        // Add random attributes
+        var radius = Math.round(Math.random() * 15 + 4);
+        var temp = Math.round(Math.random() * 4);
+        pointFeature.attributes.radius = radius;
+        pointFeature.attributes.temp = temp;
+
+        pointFeatures.push(pointFeature);
+    }
+    // Add features to the layer
+    vectorLayer.addFeatures(pointFeatures); 
+
+</script>

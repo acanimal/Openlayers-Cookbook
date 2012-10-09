@@ -1,0 +1,92 @@
+<div id="ch07_rendering_intents" style="width: 100%; height: 95%;"></div>
+
+<script type="text/javascript">
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch07_rendering_intents");
+    
+    var osm = new OpenLayers.Layer.OSM();
+    map.addLayer(osm);
+    
+    map.setCenter(new OpenLayers.LonLat(0,0), 2)
+
+    // Create the styles for the render intents
+    var defaultStyle = new OpenLayers.Style({
+        fillColor: "#336699",
+        fillOpacity: 0.4, 
+        hoverFillColor: "white",
+        hoverFillOpacity: 0.8,
+        strokeColor: "#003366",
+        strokeOpacity: 0.8,
+        strokeWidth: 2,
+        strokeLinecap: "round",
+        strokeDashstyle: "solid",
+        hoverStrokeColor: "red",
+        hoverStrokeOpacity: 1,
+        hoverStrokeWidth: 0.2,
+        pointRadius: 6,
+        hoverPointRadius: 1,
+        hoverPointUnit: "%",
+        pointerEvents: "visiblePainted",
+        cursor: "inherit"
+    });
+    var selectStyle = new OpenLayers.Style({
+        fillColor: "#ffcc00",
+        fillOpacity: 0.4, 
+        hoverFillColor: "white",
+        hoverFillOpacity: 0.6,
+        strokeColor: "#ff9900",
+        strokeOpacity: 0.6,
+        strokeWidth: 2,
+        strokeLinecap: "round",
+        strokeDashstyle: "solid",
+        hoverStrokeColor: "red",
+        hoverStrokeOpacity: 1,
+        hoverStrokeWidth: 0.2,
+        pointRadius: 6,
+        hoverPointRadius: 1,
+        hoverPointUnit: "%",
+        pointerEvents: "visiblePainted",
+        cursor: "pointer"
+    });
+    var temporaryStyle = new OpenLayers.Style({
+        fillColor: "#587058",
+        fillOpacity: 0.4, 
+        hoverFillColor: "white",
+        hoverFillOpacity: 0.8,
+        strokeColor: "#587498",
+        strokeOpacity: 0.8,
+        strokeLinecap: "round",
+        strokeWidth: 2,
+        strokeDashstyle: "solid",
+        hoverStrokeColor: "red",
+        hoverStrokeOpacity: 1,
+        hoverStrokeWidth: 0.2,
+        pointRadius: 6,
+        hoverPointRadius: 1,
+        hoverPointUnit: "%",
+        pointerEvents: "visiblePainted",
+        cursor: "inherit"
+    });
+    
+    // Create stylemap for the layer
+    var styleMap = new OpenLayers.StyleMap({
+        'default': defaultStyle,
+        'select': selectStyle,
+        'temporary': temporaryStyle
+    });
+    
+    // Create the vector layer using the defined StyleMap
+    var vectorLayer = new OpenLayers.Layer.Vector("Features", {
+        styleMap: styleMap
+    });
+    map.addLayer(vectorLayer);
+    
+    // Add controls
+    var editingControl = new OpenLayers.Control.EditingToolbar(vectorLayer);
+    var modifyControl = new OpenLayers.Control.ModifyFeature(vectorLayer, {
+        toggle: true
+    });
+    editingControl.addControls([modifyControl]);
+    map.addControl(editingControl);
+    
+</script>

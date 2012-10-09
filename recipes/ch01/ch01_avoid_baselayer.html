@@ -1,0 +1,33 @@
+<!-- Map DOM element -->
+<div id="ch1_avoid_baselayer" style="width: 100%; height: 95%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch1_avoid_baselayer", {
+        allOverlays: true
+    });
+    // Add a WMS layer
+    var wms = new OpenLayers.Layer.WMS("OpenLayers WMS Basic", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: 'basic'
+    });
+    map.addLayer(wms);
+    // Add a WMS layer
+    var topo = new OpenLayers.Layer.WMS("USA Topo Maps", "http://terraservice.net/ogcmap.ashx",
+    {
+        layers: "DRG"
+    }, 
+    {
+        opacity: 0.5
+    });
+    map.addLayer(topo);
+    // Add LayerSwitcher control
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+    
+    // Set view to zoom maximum map extent
+    // NOTE: This will fail if there is no base layer defined
+    map.setCenter(new OpenLayers.LonLat(-100, 40), 5);
+        
+</script>

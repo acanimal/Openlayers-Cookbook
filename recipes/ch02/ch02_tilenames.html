@@ -1,0 +1,62 @@
+<!-- Map DOM element -->
+<div id="ch2_tms_tilenames" style="width: 100%; height: 100%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch2_tms_tilenames");    
+    
+    // Add an OSM layer
+    var osm = new OpenLayers.Layer.OSM("OpenStreetMaps");
+    map.addLayer(osm);
+    
+    // Add layer switcher control
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+    // Set the center of the view
+    map.setCenter(new OpenLayers.LonLat(0,0), 2);
+    
+    //
+    // Class definition to create a check board
+    //
+    OpenLayers.Layer.Checkboard = OpenLayers.Class(OpenLayers.Layer.XYZ, {
+        sphericalMercator: true,
+        getURL: function (bounds) {
+            var xyz = this.getXYZ(bounds);
+            var tilename = "";
+            if( (xyz.x + xyz.y)%2==0 ) {
+                tilename = "http://chart.googleapis.com/chart?chst=d_text_outline&chs=256x256&chf=bg,s,ffffff55&chld=FFFFFF|12|h|000000|b||";
+            } else {
+                tilename = "http://chart.googleapis.com/chart?chst=d_text_outline&chs=256x256&chf=bg,s,ffffff00&chld=FFFFFF|12|h|000000|b||";
+            }
+            return tilename;
+        },	 
+        CLASS_NAME: "OpenLayers.Layer.Checkboard"
+    });
+    
+    //
+    // Class definition to show each tile name
+    //
+    OpenLayers.Layer.Tilenames = OpenLayers.Class(OpenLayers.Layer.XYZ, {
+        sphericalMercator: true,
+        getURL: function (bounds) {
+            var xyz = this.getXYZ(bounds);
+            var tilename = "";
+            if( (xyz.x + xyz.y)%2==0 ) {
+                tilename = "http://chart.googleapis.com/chart?chst=d_text_outline&chs=256x256&chld=FFFFFF|12|h|000000|b||";
+            } else {
+                tilename = "http://chart.googleapis.com/chart?chst=d_text_outline&chs=256x256&chld=000000|12|h|FFFFFF|b||";
+            }
+            tilename += "("+xyz.z+"/"+xyz.x+"/"+xyz.y+")";
+            return tilename;
+        },
+        CLASS_NAME: "OpenLayers.Layer.Tilenames"
+    });
+    
+    // Add new layer to the map
+    var ck = new OpenLayers.Layer.Checkboard("Checkboard", null, {isBaseLayer: false});
+    var tn = new OpenLayers.Layer.Tilenames("Tilename", null, {isBaseLayer: false});
+    
+    map.addLayers([ck, tn]);
+    
+</script>

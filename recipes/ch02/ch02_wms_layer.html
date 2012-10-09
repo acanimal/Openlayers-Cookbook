@@ -1,0 +1,33 @@
+<!-- Map DOM element -->
+<div id="ch2_wms_layer" style="width: 100%; height: 100%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch2_wms_layer");    
+    
+    // Add a WMS layer
+    var wms = new OpenLayers.Layer.WMS("Basic", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: 'basic'
+    });
+    
+    // Add Nexrad WMS layer
+    var nexrad = new OpenLayers.Layer.WMS("Nexrad", "http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi",
+    {
+        layers: "nexrad-n0r",
+        transparent: true,
+        format: 'image/png'
+    },
+    {
+        isBaseLayer: false
+    });
+    
+    map.addLayers([wms, nexrad]);
+    
+    // Add layer switcher control
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+    // Set the center of the view
+    map.setCenter(new OpenLayers.LonLat(-90,40), 4);
+</script>

@@ -1,0 +1,57 @@
+<table style="width: 100%; height: 95%;">
+    <tr>
+        <td>
+            <div id="ch04_map_a" style="width: 100%; height: 100%;"></div>
+        </td>
+        <td>
+            <div id="ch04_map_b" style="width: 100%; height: 100%;"></div>
+        </td>
+    </tr>
+</table>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create left map
+    var map_a = new OpenLayers.Map("ch04_map_a");    
+    var layer_a = new OpenLayers.Layer.OSM("OpenStreetMap");
+    map_a.addLayer(layer_a);
+    map_a.setCenter(new OpenLayers.LonLat(0,0), 2);
+    
+    // Create rigth map
+    var map_b = new OpenLayers.Map("ch04_map_b");    
+    var bingApiKey = "AvcVU_Eh1H2_xVcK0EeRO70MD7Zm6qwLhrVC12C3D997DylUewCWaKR9XTZgWwu6";
+    var layer_b = new OpenLayers.Layer.Bing({
+        name: "Road",
+        type: "Road",
+        key: bingApiKey
+    });
+    map_b.addLayer(layer_b);
+    map_b.setCenter(new OpenLayers.LonLat(0,0), 2);
+    
+    // Register events on map_a using 'on':
+    map_a.events.on({
+        "move": moveListener,
+        "zoomend": zoomListener
+    });
+    
+    // Register events on map_a using 'register':
+    map_b.events.register("move", null, moveListener);
+    map_b.events.register("zoomend", null, zoomListener);
+    
+    // Listener functions
+    function moveListener(event) {
+        if(event.object == map_a) {
+            map_b.setCenter(map_a.getCenter());
+        } else {
+            map_a.setCenter(map_b.getCenter());
+        }
+    }
+    function zoomListener(event) {
+        if(event.object == map_a) {
+            map_b.zoomTo(map_a.getZoom()-1);
+        } else {
+            map_a.zoomTo(map_b.getZoom()+1);
+        }
+    }
+</script>

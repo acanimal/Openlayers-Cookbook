@@ -1,0 +1,76 @@
+<table>
+    <tr>
+        <td>
+            Animation:
+        </td>
+        <td>
+            <div id="animSlider" dojoType="dijit.form.HorizontalSlider" value="0" minimum="0" maximum="100" intermediateChanges="true"
+                 showButtons="false" style="width:300px;" onChange="animation">
+                <div dojoType="dijit.form.HorizontalRule" container="bottomDecoration" count=11 style="height:5px;"></div>
+            </div> 
+        </td>
+        <td>
+            <div dojoType="dijit.form.ToggleButton" iconClass="dijitCheckBoxIcon" onChange="animateAction">Play</div>
+        </td>
+    </tr>
+</table>
+
+<!-- Map DOM element -->
+<div id="ch08_animating_raster" style="width: 100%; height: 100%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch08_animating_raster");
+    
+    // Add WMs layer
+    var wms = new OpenLayers.Layer.WMS("OpenLayers WMS Basic", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: 'basic'
+    });
+    map.addLayer(wms);
+    
+    // Center the view
+    map.setCenter(new OpenLayers.LonLat(-85, 40), 4);
+    
+    // Create an set of Image layers and add to the map
+    var img_extent = new OpenLayers.Bounds(-131.0888671875, 30.5419921875, -78.3544921875, 53.7451171875);
+    var img_size = new OpenLayers.Size(780, 480);
+        
+    var img_ulr = iamge = null;
+    var imgArray = [];
+    for(var i=1; i<=32; i++) {
+        index = (i<10) ? "0"+i : i;
+        img_url = "http://localhost:8080/openlayers-cookbook/recipes/data/radar/nexrad"+index+".png";        
+        image = new OpenLayers.Layer.Image("Image Layer", img_url, img_extent, img_size, {
+            isBaseLayer: false,
+            alwaysInRange: true, // Necessary to always draw the image
+            visibility: false
+        });
+        imgArray.push(image);
+        map.addLayer(image);
+    }
+    imgArray[0].setVisibility(true);
+    
+    var currentIndex = 0;
+    function animation(value){
+        imgArray[currentIndex].setVisibility(false);
+        currentIndex = Math.floor(value * 31 / 100);
+        imgArray[currentIndex].setVisibility(true);
+    }
+    
+    var interval = null;
+    function animateAction(checked) {
+        if(checked) {
+            interval = setInterval(function() {
+                var v = dijit.byId('animSlider').get('value');
+                v = (v>=100) ? 0 : (v+1);
+                dijit.byId('animSlider').set('value', v);
+                animation(v);
+            },50);
+        } else {
+            clearInterval(interval);
+        }
+    }
+</script>
