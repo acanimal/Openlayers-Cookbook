@@ -2,7 +2,7 @@ OpenLayers Cookbook
 ===================
 
 This is the source code that accompanies the book [OpenLayers Cookbook](http://acuriousanimal.com/blog/2012/09/02/openlayers-cookbook-is-out/)
-from [Packt Publishing](http://www.packtpub.com/openlayers-create-gis-web-applications-cookbook/book)
+from [Packt Publishing](http://www.packtpub.com/openlayers-create-gis-web-applications-cookbook/book).
 
 *Author:* [Antonio Santiago](http://acuriousanimal.com)
 
