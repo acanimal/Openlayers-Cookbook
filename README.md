@@ -6,6 +6,8 @@ from [Packt Publishing](http://www.packtpub.com/openlayers-create-gis-web-applic
 
 *Author:* [Antonio Santiago](http://acuriousanimal.com)
 
+*Version:* 1.0 - This is the same version available at PacktPublishing.
+
 Requirements
 ------------
 
