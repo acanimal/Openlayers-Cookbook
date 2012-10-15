@@ -6,14 +6,29 @@ from [Packt Publishing](http://www.packtpub.com/openlayers-create-gis-web-applic
 
 *Author:* [Antonio Santiago](http://acuriousanimal.com)
 
-*Version 1.0:* This is the same version available at PacktPublishing.
+*Version 1.1* 
+
+Version 1.1
+-----------
+
+* Use of [Dojo Toolkit](http://dojotoolkit.org/) from Google CDN (<code><script src="//ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js"></script></code>)
+* Updated Dojo version to 1.8
+* Updated OpenLayers version to 2.12
+* Source code updated to use Dojo 1.8 syntax (using HTML5 <code>data</code> attribute) instead old
+one (non standar <code>dojoType</code>).
+* Source code highlighted via [CodeMirror](http://codemirror.net/) project.
+
+Version 1.0
+-----------
+
+This is the original version available at Packt Publishing site.
 
 Requirements
 ------------
 
 To run the code samples of the book you need HTTP server with PHP support. 
-PHP is only required for some recipes, so you can run many of them on a server 
-without PHP support.
+PHP is only required for those recipes that load content via AJAX (like WFS), 
+so you can run many of them on a server without PHP support.
 
 How to run the examples
 -----------------------
@@ -24,7 +39,7 @@ for example, accessing: http://localhost:8080/openlayers-cookbook/index.html.
 We have prepared an application with a main menu on top, where user can 
 choose and run the desired recipe. 
 
-Each recipe will be openen in a new tab, where user will see two subtabs, first with
+Each recipe will be opened in a new tab, where user will see two subtabs, first with
 the recipe results and the second with the recipe code.
 
 Content of the project folder
@@ -34,7 +49,7 @@ The summary of the project folder is:
 
 * `\css` - CSS files for the user interface.
 
-* `\defs` - Projection definitions from the Proj4js project required on some recipes of the book.
+* `\defs` - Projection definitions from the [Proj4js](http://trac.osgeo.org/proj4js/) project required on some recipes of the book.
 
 * `\js` - Contains code for the libraries the project depends on.
 
@@ -42,10 +57,7 @@ The summary of the project folder is:
                           this version, so here is the same version. Maybe some things can be changes
                           or deprecated in future version, so it is better to have the exact version here.
 
-* `\js\dojo-release-1.7.2` - The main application and some recipes used components (like tabs, button,
-                         sliders, etc) from this projects. Here is the code for the version used.
-
-* `\js\proj4js-1.1.0` - Proj4js project code. OpenLayers depends on this project for some operations.
+* `\js\proj4js-1.1.0` - [Proj4js](http://trac.osgeo.org/proj4js/) project code. OpenLayers depends on this project for some operations.
 
 * `\nbproject` - NetBeans custom files. The project was coded using NetBeans IDE. This
          folder is helpful for those user that wants to edit book samples on NetBeans.

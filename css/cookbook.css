@@ -24,3 +24,11 @@ iframe {
     font-weight: bold;
     padding-left: 4px;
 }
+
+.CodeMirror {
+    font-size: 1.4em;
+}
+.CodeMirror-scroll {
+    height: 100%;
+    width: 100%;
+}
