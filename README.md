@@ -11,7 +11,7 @@ from [Packt Publishing](http://www.packtpub.com/openlayers-create-gis-web-applic
 Version 1.1
 -----------
 
-* Use of [Dojo Toolkit](http://dojotoolkit.org/) from Google CDN (<code><script src="//ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js"></script></code>)
+* Use of [Dojo Toolkit](http://dojotoolkit.org/) from Google CDN (`<script src="//ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js"></script>`)
 * Updated Dojo version to 1.8
 * Updated OpenLayers version to 2.12
 * Source code updated to use Dojo 1.8 syntax (using HTML5 <code>data</code> attribute) instead old
