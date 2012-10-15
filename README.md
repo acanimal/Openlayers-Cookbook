@@ -53,11 +53,13 @@ The summary of the project folder is:
 
 * `\js` - Contains code for the libraries the project depends on.
 
-* `\js\OpenLayers-2.11` - OpenLayers library version 2.11. The book samples has coded with
+* `\js\OpenLayers-2.12` - OpenLayers library version 2.11. The book samples has coded with
                           this version, so here is the same version. Maybe some things can be changes
                           or deprecated in future version, so it is better to have the exact version here.
 
 * `\js\proj4js-1.1.0` - [Proj4js](http://trac.osgeo.org/proj4js/) project code. OpenLayers depends on this project for some operations.
+
+* `\js\codemirror-2.34` - [CodeMirror](http://codemirror.net/) project code. The source code is highlighted using it with the `eclipse` theme.
 
 * `\nbproject` - NetBeans custom files. The project was coded using NetBeans IDE. This
          folder is helpful for those user that wants to edit book samples on NetBeans.
