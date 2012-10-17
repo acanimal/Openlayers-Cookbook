@@ -21,18 +21,18 @@
     // Create the map using the specified DOM element
     var map_a = new OpenLayers.Map("ch01_base_nonbase_map_a");
     // Add a WMS layer
-    var wms = new OpenLayers.Layer.WMS("OpenLayers WMS Basic", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    var wms = new OpenLayers.Layer.WMS("WMS Coastline", "http://vmap0.tiles.osgeo.org/wms/vmap0",
     {
-        layers: 'basic'
+        layers: 'coastline_01'
     },
     {
         isBaseLayer: true
     });
     map_a.addLayer(wms);
     // Add a WMS layer
-    var topo = new OpenLayers.Layer.WMS("USA Topo Maps", "http://terraservice.net/ogcmap.ashx",
+    var topo = new OpenLayers.Layer.WMS("WMS Ground", "http://vmap0.tiles.osgeo.org/wms/vmap0",
     {
-        layers: "DRG"
+        layers: "ground_01"
     },
     {
         opacity: 0.5,
@@ -44,7 +44,7 @@
            
     // Set view to zoom maximum map extent
     // NOTE: This will fail if there is no base layer defined
-    map_a.setCenter(new OpenLayers.LonLat(-100, 40), 5);
+    map_a.setCenter(new OpenLayers.LonLat(-100, 40), 3);
     
     //
     // Initialize right map
@@ -53,15 +53,15 @@
     // Create the map using the specified DOM element
     var map_b = new OpenLayers.Map("ch01_base_nonbase_map_b");
     // Add a WMS layer
-    var wms = new OpenLayers.Layer.WMS("OpenLayers WMS Basic", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    var wms = new OpenLayers.Layer.WMS("WMS Coastline", "http://vmap0.tiles.osgeo.org/wms/vmap0",
     {
-        layers: 'basic'
+        layers: 'coastline_01'
     });
     map_b.addLayer(wms);
     // Add a WMS layer
-    var topo = new OpenLayers.Layer.WMS("USA Topo Maps", "http://terraservice.net/ogcmap.ashx",
+    var topo = new OpenLayers.Layer.WMS("WMS Ground", "http://vmap0.tiles.osgeo.org/wms/vmap0",
     {
-        layers: "DRG"
+        layers: "ground_01"
     });
     map_b.addLayer(topo);
     // Add LayerSwitcher control
@@ -69,5 +69,5 @@
            
     // Set view to zoom maximum map extent
     // NOTE: This will fail if there is no base layer defined
-    map_b.setCenter(new OpenLayers.LonLat(-100, 40), 5);
+    map_b.setCenter(new OpenLayers.LonLat(-100, 40), 3);
 </script>

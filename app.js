@@ -7,11 +7,10 @@ require([
     "dojo/_base/array", 
     "dijit/registry",
     "dojo/_base/lang",
-    "dojo/dom-construct",
     "dojo/request/xhr",
     "dojox/layout/ContentPane",
     "dijit/form/Textarea"
-    ], function(ready, parser, array, registry, lang, domConstruct, xhr){
+    ], function(ready, parser, array, registry, lang, xhr){
         ready(function(){
         
             //

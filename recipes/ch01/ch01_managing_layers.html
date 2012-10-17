@@ -72,15 +72,10 @@
         allOverlays: true
     });
 
-    var jpl = new OpenLayers.Layer.WMS("JPL", 
-    [
-        "http://t1.hypercube.telascience.org/tiles?",
-        "http://t2.hypercube.telascience.org/tiles?",
-        "http://t3.hypercube.telascience.org/tiles?",
-        "http://t4.hypercube.telascience.org/tiles?"
-    ], 
+    var jpl = new OpenLayers.Layer.WMS("JPL", "http://wms.jpl.nasa.gov/wms.cgi",
     {
-        layers: 'landsat7'
+        layers: 'global_mosaic_base',
+        format: "image/png" 
     });
     var worldmap = new OpenLayers.Layer.WMS("WorldMap", "http://vmap0.tiles.osgeo.org/wms/vmap0", 
     {
