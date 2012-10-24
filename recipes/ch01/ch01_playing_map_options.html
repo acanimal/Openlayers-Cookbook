@@ -15,7 +15,9 @@
     
     // Create the map using the specified DOM element
     var map = new OpenLayers.Map(options);
-    // Add a WMS layer
+    
+    // Add a WMS layer. 
+    // Note by deault it will use the Map's projection in the WMS requests
     var wms = new OpenLayers.Layer.WMS("OpenLayers WMS Basic", "http://vmap0.tiles.osgeo.org/wms/vmap0",
     {
         layers: 'basic'
