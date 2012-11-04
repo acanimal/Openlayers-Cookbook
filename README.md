@@ -48,7 +48,7 @@ is read.
 
 The `chapters.json` file contains the name of chapters, recipes and references to
 each recipe applications, for example:
-`
+
     {
         "name": "Chapter01 - Mapping Basics",
         "recipes": [
@@ -64,7 +64,7 @@ each recipe applications, for example:
         ]
     },
     ...
-`
+
 
 ## Content of the project folder
 
