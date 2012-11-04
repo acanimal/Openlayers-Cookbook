@@ -1,10 +1,10 @@
 <form action="">
-    <button data-dojo-type="dijit.form.ToggleButton" data-dojo-props="iconClass:'dijitCheckBoxIcon', checked: false, onChange: modifyChanged">Modify</button>
-    Reshape: <input id="reshape" dojoType="dijit.form.CheckBox"onChange="changeMode" name="layer"/>
-    Resize: <input id="resize" dojoType="dijit.form.CheckBox" onChange="changeMode" name="layer"/>
-    Rotate <input id="rotate" dojoType="dijit.form.CheckBox" onChange="changeMode" name="layer"/>
-    Drag: <input id="drag" dojoType="dijit.form.CheckBox" onChange="changeMode" name="layer"/>
-    Filter: <select dojoType="dijit.form.Select" id="filter" onChange="changeFilter" name="filter" style="width: 200px;">
+    <button data-dojo-type="dijit/form/ToggleButton" data-dojo-props="iconClass:'dijitCheckBoxIcon', checked: false, onChange: modifyChanged">Modify</button>
+    Reshape: <input id="reshape" data-dojo-type="dijit/form/CheckBox" onChange="changeMode" name="layer"/>
+    Resize: <input id="resize" data-dojo-type="dijit/form/CheckBox" onChange="changeMode" name="layer"/>
+    Rotate <input id="rotate" data-dojo-type="dijit/form/CheckBox" onChange="changeMode" name="layer"/>
+    Drag: <input id="drag" data-dojo-type="dijit/form/CheckBox" onChange="changeMode" name="layer"/>
+    Filter: <select data-dojo-type="dijit/form/Select" id="filter" onChange="changeFilter" name="filter" style="width: 200px;">
         <option value="ALL" selected>No Filter</option>
         <option value="POINT">POINT</option>
         <option value="PATH">PATH</option>

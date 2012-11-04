@@ -37,20 +37,20 @@ Center: <span id="center"></span> - Zoom: <span id="zoom"></span>
                             <tr>
                                 <td>X pixels</td>
                                 <td>
-                                    <input id="movebyxpix" dojoType="dijit.form.NumberSpinner" style="width:100px"
-                                           value="0" smallDelta="10" constraints="{min:-180,max:180}" />
+                                    <input id="movebyxpix" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 0, smallDelta: 10, constraints: {min:-180,max:180}" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Y pixels</td>
                                 <td>
-                                    <input id="movebyypix" dojoType="dijit.form.NumberSpinner" style="width:100px"
-                                           value="0" smallDelta="10" constraints="{min:-180,max:180}" />
+                                    <input id="movebyypix" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 0, smallDelta: 10, constraints: {min:-90,max:90}" />
                                 </td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td><button dojoType="dijit.form.Button" onClick="moveByPx()">moveByPx</button></td>
+                                <td><button data-dojo-type="dijit/form/Button" onClick="moveByPx()">moveByPx</button></td>
                             </tr>
                         </table>
                     </td>
@@ -63,35 +63,36 @@ Center: <span id="center"></span> - Zoom: <span id="zoom"></span>
                             <tr>
                                 <td>lon</td>
                                 <td>
-                                    <input id="movetolon" dojoType="dijit.form.NumberSpinner" style="width:100px"
-                                           value="0" smallDelta="10" constraints="{min:-180,max:180}" />
+                                    <input id="movetolon" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 0, smallDelta: 10, constraints: {min:-180,max:180}" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>lat</td>
                                 <td>
-                                    <input id="movetolat" dojoType="dijit.form.NumberSpinner" style="width:100px"
-                                           value="0" smallDelta="10" constraints="{min:-180,max:180}" />
+                                    <input id="movetolat" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 0, smallDelta: 10, constraints: {min:-90,max:90}" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>zoom</td>
                                 <td>
-                                    <input id="movetozoom" dojoType="dijit.form.NumberSpinner" style="width:100px"
-                                           value="3" smallDelta="1" constraints="{min:0,max:18}" />
+                                    <input id="movetozoom" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 3, smallDelta: 1, constraints: {min:0,max:18}" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>forceZoomChange</td>
-                                <td><input id="movetoforceZoomChange" dojoType="dijit.form.CheckBox" checked></td>
+                                <td><input id="movetoforceZoomChange" data-dojo-type="dijit/form/CheckBox" 
+                                           data-dojo-props="checked: true"></td>
                             </tr>
                             <tr>
                                 <td>dragging</td>
-                                <td><input id="movetodragging" dojoType="dijit.form.CheckBox"></td>
+                                <td><input id="movetodragging" data-dojo-type="dijit/form/CheckBox"></td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td><button dojoType="dijit.form.Button" onClick="moveTo()">moveTo</button></td>
+                                <td><button data-dojo-type="dijit/form/Button" onClick="moveTo()">moveTo</button></td>
                             </tr>
                         </table>
                     </td>
@@ -104,35 +105,36 @@ Center: <span id="center"></span> - Zoom: <span id="zoom"></span>
                             <tr>
                                 <td>lon</td>
                                 <td>
-                                    <input id="setCenterlon" dojoType="dijit.form.NumberSpinner" style="width:100px"
-                                           value="0" smallDelta="10" constraints="{min:-180,max:180}" />
+                                    <input id="setCenterlon" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 0, smallDelta: 10, constraints: {min:-180,max:180}" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>lat</td>
                                 <td>
-                                    <input id="setCenterlat" dojoType="dijit.form.NumberSpinner" style="width:100px"
-                                           value="0" smallDelta="10" constraints="{min:-180,max:180}" />
+                                    <input id="setCenterlat" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 0, smallDelta: 10, constraints: {min:-90,max:90}" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>zoom</td>
                                 <td>
-                                    <input id="setCenterzoom" dojoType="dijit.form.NumberSpinner" style="width:100px"
-                                           value="3" smallDelta="1" constraints="{min:0,max:18}" />
+                                    <input id="setCenterzoom" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 3, smallDelta: 1, constraints: {min:0,max:18}" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>forceZoomChange</td>
-                                <td><input id="setCenterforceZoomChange" dojoType="dijit.form.CheckBox" checked></td>
+                                <td><input id="setCenterforceZoomChange" data-dojo-type="dijit/form/CheckBox" 
+                                           data-dojo-props="checked: true"></td>
                             </tr>
                             <tr>
                                 <td>dragging</td>
-                                <td><input id="setCenterdragging" dojoType="dijit.form.CheckBox"></td>
+                                <td><input id="setCenterdragging" data-dojo-type="dijit/form/CheckBox"></td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td><button dojoType="dijit.form.Button" onClick="setCenter()">setCenter</button></td>
+                                <td><button data-dojo-type="dijit/form/Button" onClick="setCenter()">setCenter</button></td>
                             </tr>
                         </table>
                     </td>
@@ -145,28 +147,29 @@ Center: <span id="center"></span> - Zoom: <span id="zoom"></span>
                             <tr>
                                 <td>X pixels</td>
                                 <td>
-                                    <input id="panxpix" dojoType="dijit.form.NumberSpinner" style="width:100px"
-                                           value="0" smallDelta="10" constraints="{min:-180,max:180}" />
+                                    <input id="panxpix" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 0, smallDelta: 10, constraints: {min:-180,max:180}" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Y pixels</td>
                                 <td>
-                                    <input id="panypix" dojoType="dijit.form.NumberSpinner" style="width:100px"
-                                           value="0" smallDelta="10" constraints="{min:-180,max:180}" />
+                                    <input id="panypix" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 0, smallDelta: 10, constraints: {min:-90,max:90}" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>animate</td>
-                                <td><input id="pananimate" dojoType="dijit.form.CheckBox" checked></td>
+                                <td><input id="pananimate" data-dojo-type="dijit/form/CheckBox" 
+                                           data-dojo-props="checked: true"></td>
                             </tr>
                             <tr>
                                 <td>dragging</td>
-                                <td><input id="pandragging" dojoType="dijit.form.CheckBox"></td>
+                                <td><input id="pandragging" data-dojo-type="dijit/form/CheckBox"></td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td><button dojoType="dijit.form.Button" onClick="pan()">pan</button></td>
+                                <td><button data-dojo-type="dijit/form/Button" onClick="pan()">pan</button></td>
                             </tr>
                         </table>
                     </td>
@@ -179,20 +182,20 @@ Center: <span id="center"></span> - Zoom: <span id="zoom"></span>
                             <tr>
                                 <td>lon</td>
                                 <td>
-                                    <input id="panTolon" dojoType="dijit.form.NumberSpinner" style="width:100px"
-                                           value="0" smallDelta="10" constraints="{min:-180,max:180}" />
+                                    <input id="panTolon" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 0, smallDelta: 10, constraints: {min:-180,max:180}" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>lat</td>
                                 <td>
-                                    <input id="panTolat" dojoType="dijit.form.NumberSpinner" style="width:100px"
-                                           value="0" smallDelta="10" constraints="{min:-180,max:180}" />
+                                    <input id="panTolat" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 0, smallDelta: 10, constraints: {min:-90,max:90}" />
                                 </td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td><button dojoType="dijit.form.Button" onClick="panTo()">panTo</button></td>
+                                <td><button data-dojo-type="dijit/form/Button" onClick="panTo()">panTo</button></td>
                             </tr>
                         </table>
                     </td>

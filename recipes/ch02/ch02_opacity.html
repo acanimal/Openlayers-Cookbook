@@ -4,10 +4,13 @@
             Opacity:
         </td>
         <td>
-            <div dojoType="dijit.form.HorizontalSlider" value="100" minimum="0" maximum="100" intermediateChanges="true"
-                 showButtons="false" style="width:300px;" onChange="opacity">
-                <div dojoType="dijit.form.HorizontalRule" container="bottomDecoration" count=11 style="height:5px;"></div>
-                <ol dojoType="dijit.form.HorizontalRuleLabels" container="bottomDecoration" style="height:1em;font-size:75%;color:gray;">
+            <div data-dojo-type="dijit/form/HorizontalSlider" 
+                 data-dojo-props="value:100, minimum:0, maximum:100, intermediateChanges:true, showButtons:false" 
+                 style="width:300px;" onChange="opacity">
+                <div data-dojo-type="dijit/form/HorizontalRule"
+                     data-dojo-props="count:11, container:'bottomDecoration'" style="height:5px;"></div>
+                <ol data-dojo-type="dijit/form/HorizontalRuleLabels" 
+                    data-dojo-props="container:'bottomDecoration'" style="height:1em;font-size:75%;color:gray;">
                     <li>0%</li>
                     <li>50%</li>
                     <li>100%</li>

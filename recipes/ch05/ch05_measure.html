@@ -14,17 +14,18 @@
 </style>
 
 <div class="measureoptions">
-    <button dojoType="dijit.form.ToggleButton" id="measureButton" onChange="measureClick" iconClass='dijitCheckBoxIcon' checked="false">Measure</button>
+    <button data-dojo-type="dijit/form/ToggleButton" id="measureButton" onChange="measureClick" 
+            data-dojo-props="iconClass:'dijitCheckBoxIcon', checked:false">Measure</button>
     <div class="section">
         <strong>Measure</strong><br/>
-        Path: <input id="path" dojoType="dijit.form.RadioButton" onChange="changeHandler" checked name="layer"/>
-        Polygon: <input id="polygon" dojoType="dijit.form.RadioButton" onChange="changeHandler" name="layer"/>
-        Regular Polygon: <input id="regular" dojoType="dijit.form.RadioButton" onChange="changeHandler" name="layer"/>
+        Path: <input id="path" data-dojo-type="dijit/form/RadioButton" data-dojo-props="checked:true" onChange="changeHandler" name="layer"/>
+        Polygon: <input id="polygon" data-dojo-type="dijit/form/RadioButton" onChange="changeHandler" name="layer"/>
+        Regular Polygon: <input id="regular" data-dojo-type="dijit/form/RadioButton" onChange="changeHandler" name="layer"/>
     </div>
     <div class="section">
         <strong>Options</strong><br/>
-        Geodesic <input id="geodesic" dojoType="dijit.form.CheckBox" onChange="changeGeodesic" name="layer"/>
-        Immediate: <input id="immediate" dojoType="dijit.form.CheckBox" onChange="changeImmediate" name="layer"/>
+        Geodesic <input id="geodesic" data-dojo-type="dijit/form/CheckBox" onChange="changeGeodesic" name="layer"/>
+        Immediate: <input id="immediate" data-dojo-type="dijit/form/CheckBox" onChange="changeImmediate" name="layer"/>
     </div>
     <div class="section">
         <strong>Measure:</strong> <span id="value"></span>

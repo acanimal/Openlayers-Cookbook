@@ -4,13 +4,15 @@
             Animation:
         </td>
         <td>
-            <div id="animSlider" dojoType="dijit.form.HorizontalSlider" value="0" minimum="0" maximum="100" intermediateChanges="true"
-                 showButtons="false" style="width:300px;" onChange="animation">
-                <div dojoType="dijit.form.HorizontalRule" container="bottomDecoration" count=11 style="height:5px;"></div>
+            <div id="animSlider" data-dojo-type="dijit/form/HorizontalSlider" 
+                 data-dojo-props="value:100, minimum:0, maximum:100, intermediateChanges:true, showButtons:false"
+                 style="width:300px;" onChange="animation">
+                <div data-dojo-type="dijit/form/HorizontalRule" 
+                     data-dojo-props="container:'bottomDecoration', count:11" style="height:5px;"></div>
             </div> 
         </td>
         <td>
-            <div dojoType="dijit.form.ToggleButton" iconClass="dijitCheckBoxIcon" onChange="animateAction">Play</div>
+            <div data-dojo-type="dijit/form/ToggleButton" data-dojo-props="iconClass:'dijitCheckBoxIcon'" onChange="animateAction">Play</div>
         </td>
     </tr>
 </table>

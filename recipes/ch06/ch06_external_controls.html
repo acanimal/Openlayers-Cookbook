@@ -7,24 +7,24 @@
     .length { background-image: url(./recipes/data/gis_icons/length-measure.png); }
 </style>
 
-<div data-dojo-type="dijit.Toolbar">
+<div data-dojo-type="dijit/Toolbar">
     Editor:
-    <div data-dojo-type="dijit.form.ToggleButton" 
+    <div data-dojo-type="dijit/form/ToggleButton" 
          data-dojo-props="iconClass:'dijitEditorIcon pointer', showLabel:false, onClick:pointerAction, checked:true">Pan</div>
-    <div data-dojo-type="dijit.form.ToggleButton" 
+    <div data-dojo-type="dijit/form/ToggleButton" 
          data-dojo-props="iconClass:'dijitEditorIcon point', showLabel:false, onClick:pointAction">Point</div>
-    <div data-dojo-type="dijit.form.ToggleButton" 
+    <div data-dojo-type="dijit/form/ToggleButton" 
          data-dojo-props="iconClass:'dijitEditorIcon line', showLabel:false, onClick:lineAction">Line</div>
-    <div data-dojo-type="dijit.form.ToggleButton" 
+    <div data-dojo-type="dijit/form/ToggleButton" 
          data-dojo-props="iconClass:'dijitEditorIcon polygon', showLabel:false, onClick:polygonAction">Polygon</div>
 
-    <span data-dojo-type="dijit.ToolbarSeparator"></span>
+    <span data-dojo-type="dijit/ToolbarSeparator"></span>
 
-    <div data-dojo-type="dijit.form.DropDownButton">
+    <div data-dojo-type="dijit/form/DropDownButton">
         <span>Measure</span>
-        <div data-dojo-type="dijit.DropDownMenu">
-            <div data-dojo-type="dijit.MenuItem" data-dojo-props="iconClass:'dijitEditorIcon length', onClick:measureLengthAction">Distance</div>
-            <div data-dojo-type="dijit.MenuItem" data-dojo-props="iconClass:'dijitEditorIcon area', onClick:measureAreaAction">Area</div>
+        <div data-dojo-type="dijit/DropDownMenu">
+            <div data-dojo-type="dijit/MenuItem" data-dojo-props="iconClass:'dijitEditorIcon length', onClick:measureLengthAction">Distance</div>
+            <div data-dojo-type="dijit/MenuItem" data-dojo-props="iconClass:'dijitEditorIcon area', onClick:measureAreaAction">Area</div>
         </div>
     </div>
 
