@@ -35,9 +35,8 @@
                     <td>Select layer:</td>
                     <td>
                         <select id="layerSelection" data-dojo-type="dijit/form/Select">
-                            <option value="JPL">JPL</option>
-                            <option value="WorldMap">WorldMap</option>
-                            <option value="Canada">Canada</option>
+                            <option value="MapQuest-OSM">MapQuest-OSM</option>
+                            <option value="MapQuest-Aerial">MapQuest-Aerial</option>
                         </select>
                     </td>
                 </tr>
@@ -72,29 +71,19 @@
         allOverlays: true
     });
 
-    var jpl = new OpenLayers.Layer.WMS("JPL", "http://wms.jpl.nasa.gov/wms.cgi",
-    {
-        layers: 'global_mosaic_base',
-        format: "image/png" 
-    });
-    var worldmap = new OpenLayers.Layer.WMS("WorldMap", "http://vmap0.tiles.osgeo.org/wms/vmap0", 
-    {
-        layers: 'basic', 
-        format: 'image/png' 
-    },
-    {
-        opacity: 0.5
-    });
-    var canada = new OpenLayers.Layer.WMS("Canada", "http://www2.dmsolutions.ca/cgi-bin/mswms_gmap",
-    {
-        layers: "bathymetry,land_fn,park",
-        transparent: "true", 
-        format: "image/png" 
-    },
-    {
-        opacity: 0.5
-    });
-    map.addLayers([jpl, worldmap, canada]);
+    // Add some OSM based layers using an array of URL sources
+    var arrayOSM = ["http://otile1.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg",
+        "http://otile2.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg",
+        "http://otile3.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg",
+        "http://otile4.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg"];
+    var arrayAerial = ["http://oatile1.mqcdn.com/tiles/1.0.0/sat/${z}/${x}/${y}.jpg",
+        "http://oatile2.mqcdn.com/tiles/1.0.0/sat/${z}/${x}/${y}.jpg",
+        "http://oatile3.mqcdn.com/tiles/1.0.0/sat/${z}/${x}/${y}.jpg",
+        "http://oatile4.mqcdn.com/tiles/1.0.0/sat/${z}/${x}/${y}.jpg"];
+
+    var baseAerial = new OpenLayers.Layer.OSM("MapQuest-Aerial", arrayAerial);
+    var baseOSM = new OpenLayers.Layer.OSM("MapQuest-OSM", arrayOSM, {opacity: 0.6});
+    map.addLayers([baseAerial, baseOSM]);
 
     // Add LayerSwitcher control
     map.addControl(new OpenLayers.Control.LayerSwitcher({ascending: false}));
@@ -120,6 +109,7 @@
     }
     function bottomLayer() {
         var layerName = dijit.byId('layerSelection').get('value');
+        console.log(layerName);
         var layer = map.getLayersByName(layerName)[0];
         map.setLayerIndex(layer, 0);
     }
