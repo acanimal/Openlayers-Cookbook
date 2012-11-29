@@ -109,7 +109,6 @@
     }
     function bottomLayer() {
         var layerName = dijit.byId('layerSelection').get('value');
-        console.log(layerName);
         var layer = map.getLayersByName(layerName)[0];
         map.setLayerIndex(layer, 0);
     }
