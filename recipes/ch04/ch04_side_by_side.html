@@ -34,8 +34,7 @@
     
     // Register events on map_a using 'on':
     map_a.events.on({
-        "move": moveListener,
-        "zoomend": zoomListener
+        "move": moveListener
     });
     
     // Register events on map_a using 'register':
@@ -48,5 +47,5 @@
         } else {
             map_a.setCenter(map_b.getCenter());
         }
-    }
+    } 
 </script>
