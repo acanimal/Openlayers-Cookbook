@@ -4,7 +4,8 @@
 <!-- The magic comes here -->
 <script type="text/javascript">
 
-//    OpenLayers.ProxyHost = "./utils/proxy.php?url=";
+    // Set our proxy script to avoid issues with XDR (Cross Domain Requests)
+    OpenLayers.ProxyHost = "./utils/proxy.php?url=";
 
     // Create the map using the specified DOM element
     var map = new OpenLayers.Map("ch3_wfs");    

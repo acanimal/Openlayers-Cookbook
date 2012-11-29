@@ -17,7 +17,7 @@
     
     // Create HTTP protocol to read GML file
     var gmlReq = new OpenLayers.Protocol.HTTP({
-        url: "http://localhost:8080/Openlayers-Cookbook/recipes/data/world_cities.json",
+        url: "./recipes/data/world_cities.json",
         format: new OpenLayers.Format.GeoJSON(),
         callback: addFeaturesFromResponse
     });
@@ -25,7 +25,7 @@
     
     // Create HTTP protocol to read KML file
     var kmlReq = new OpenLayers.Protocol.HTTP({
-        url: "http://localhost:8080/Openlayers-Cookbook/recipes/data/global_undersea.kml",
+        url: "./recipes/data/global_undersea.kml",
         format: new OpenLayers.Format.KML({
             extractStyles: true,
             extractAttributes: true
@@ -37,7 +37,6 @@
     // Translate features from EPSG:4326 to OSM projection and
     // add to the layer only the Point geometry features.
     function addFeaturesFromResponse(response) {
-        console.log(response);
         for(var i=0; i<response.features.length; ++i) {        
             if(response.features[i].geometry.CLASS_NAME == "OpenLayers.Geometry.Point") {
                 response.features[i].geometry.transform(vectorLayer.projection, map.getProjectionObject());
