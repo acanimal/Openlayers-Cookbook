@@ -17,6 +17,7 @@ from [Packt Publishing](http://www.packtpub.com/openlayers-create-gis-web-applic
 * Source code updated to use Dojo 1.8 syntax (using HTML5 <code>data</code> attribute) instead old
 one (non standar <code>dojoType</code>).
 * Source code highlighted via [CodeMirror](http://codemirror.net/) project.
+* Use of relative paths to load data files (attached to the project).
 
 ### Version 1.0
 
