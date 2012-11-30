@@ -6,7 +6,6 @@
 
     // Create the map using the specified DOM element
     var map = new OpenLayers.Map("ch08_requesting");
-    
     var osm = new OpenLayers.Layer.OSM();
     map.addLayer(osm);
     
@@ -21,7 +20,7 @@
     OpenLayers.Request.GET({
         url: "utils/points.php",
         params: {
-            num: 100
+            num: 300
         },
         success: function(response) {
             var format = new OpenLayers.Format.JSON();
