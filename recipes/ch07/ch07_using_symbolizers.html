@@ -121,12 +121,12 @@
     map.addControl(editingControl);
     
     function setFeatureStyle(event) {
-        var fillColor = dijit.byId('fillColor').get('value');
-        var fillOpacity = dijit.byId('fillOpacity').get('value')/100;
-        var strokeColor = dijit.byId('strokeColor').get('value');
-        var strokeWidth = dijit.byId('strokeWidth').get('value');
-        var strokeOpacity = dijit.byId('strokeOpacity').get('value')/100;
-        var pointRadius = dijit.byId('pointRadius').get('value');
+        var fillColor = dijit.registry.byId('fillColor').get('value');
+        var fillOpacity = dijit.registry.byId('fillOpacity').get('value')/100;
+        var strokeColor = dijit.registry.byId('strokeColor').get('value');
+        var strokeWidth = dijit.registry.byId('strokeWidth').get('value');
+        var strokeOpacity = dijit.registry.byId('strokeOpacity').get('value')/100;
+        var pointRadius = dijit.registry.byId('pointRadius').get('value');
         
         var style = OpenLayers.Util.extend({}, OpenLayers.Feature.Vector.style['default']);
         style.fillColor = fillColor;
