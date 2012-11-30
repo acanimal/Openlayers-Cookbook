@@ -9,13 +9,13 @@
 
 <div data-dojo-type="dijit/Toolbar">
     Editor:
-    <div data-dojo-type="dijit/form/ToggleButton" 
+    <div data-dojo-type="dijit/form/ToggleButton" id="pointer"
          data-dojo-props="iconClass:'dijitEditorIcon pointer', showLabel:false, onClick:pointerAction, checked:true">Pan</div>
-    <div data-dojo-type="dijit/form/ToggleButton" 
+    <div data-dojo-type="dijit/form/ToggleButton" id="point"
          data-dojo-props="iconClass:'dijitEditorIcon point', showLabel:false, onClick:pointAction">Point</div>
-    <div data-dojo-type="dijit/form/ToggleButton" 
+    <div data-dojo-type="dijit/form/ToggleButton" id="line"
          data-dojo-props="iconClass:'dijitEditorIcon line', showLabel:false, onClick:lineAction">Line</div>
-    <div data-dojo-type="dijit/form/ToggleButton" 
+    <div data-dojo-type="dijit/form/ToggleButton" id="polygon"
          data-dojo-props="iconClass:'dijitEditorIcon polygon', showLabel:false, onClick:polygonAction">Polygon</div>
 
     <span data-dojo-type="dijit/ToolbarSeparator"></span>
@@ -100,7 +100,13 @@
         }
     }
     function _unselectButtons(context) {
-        dijit.registry.byClass('dijit.form.ToggleButton').forEach(function(button){
+        var actionButtons = [
+            dijit.registry.byId('pointer'),
+            dijit.registry.byId('point'),
+            dijit.registry.byId('line'),
+            dijit.registry.byId('polygon')
+        ];
+        dojo.forEach(actionButtons, function(button, index){ 
             if(context==button) return;
             button.set('checked', false);
         });
