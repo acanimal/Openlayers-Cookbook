@@ -1,0 +1,100 @@
+<style>
+    .measureoptions {
+        border: 1px solid #bbb;
+        padding: 4px;
+        margin: 2px;
+        width: 100%;
+    }
+    .section {
+        border-left: 1px solid #aaa;
+        margin-left: 4px;
+        padding-left: 4px;
+        display: inline-block;
+    }
+</style>
+
+<div class="measureoptions">
+    <button data-dojo-type="dijit/form/ToggleButton" id="measureButton" onChange="measureClick" 
+            data-dojo-props="iconClass:'dijitCheckBoxIcon', checked:false">Measure</button>
+    <div class="section">
+        <strong>Measure</strong><br/>
+        Path: <input id="path" data-dojo-type="dijit/form/RadioButton" data-dojo-props="checked:true" onChange="changeHandler" name="layer"/>
+        Polygon: <input id="polygon" data-dojo-type="dijit/form/RadioButton" onChange="changeHandler" name="layer"/>
+        Regular Polygon: <input id="regular" data-dojo-type="dijit/form/RadioButton" onChange="changeHandler" name="layer"/>
+    </div>
+    <div class="section">
+        <strong>Options</strong><br/>
+        Geodesic <input id="geodesic" data-dojo-type="dijit/form/CheckBox" onChange="changeGeodesic" name="layer"/>
+        Immediate: <input id="immediate" data-dojo-type="dijit/form/CheckBox" onChange="changeImmediate" name="layer"/>
+    </div>
+    <div class="section">
+        <strong>Measure:</strong> <span id="value"></span>
+    </div>
+</div>
+
+<div id="ch05_measure" style="width: 100%; height: 100%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+    // Create map
+    var map = new OpenLayers.Map("ch05_measure");    
+    var osm = new OpenLayers.Layer.OSM();        
+    map.addLayer(osm);
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+    map.setCenter(new OpenLayers.LonLat(0, 0), 3);
+
+    var measureControl = new OpenLayers.Control.Measure(OpenLayers.Handler.Path, {
+        persist: true,
+        eventListeners: {
+            'measure': measure,
+            'measurepartial': measurepartial
+        }
+    });
+
+    function measureClick(checked) {
+        var path = dijit.byId('path').get('checked');
+        var polygon = dijit.byId('polygon').get('checked');
+        var regular = dijit.byId('regular').get('checked');
+        
+        if(checked){
+            if(path) {
+                measureControl.updateHandler(OpenLayers.Handler.Path, {persist: true});
+            } else if(polygon) {
+                measureControl.updateHandler(OpenLayers.Handler.Polygon, {persist: true});
+            } else if(regular) {
+                measureControl.updateHandler(OpenLayers.Handler.RegularPolygon, {persist: true});
+            }
+            map.addControl(measureControl);
+            measureControl.activate();
+        } else {
+            measureControl.deactivate();
+            map.removeControl(measureControl);
+        }
+        
+        dojo.byId('value').innerHTML = "";
+    }
+    
+    function measure(event) {
+        var message = event.measure + " " + event.units;
+        if(event.order>1) {
+            message += "2";
+        }
+        dojo.byId('value').innerHTML = message;
+    }
+    
+    function measurepartial(event) {
+        var message = event.measure + " " + event.units;
+        dojo.byId('value').innerHTML = message;
+    }
+    
+    function changeHandler(checked){
+        measureClick(dijit.byId('measureButton').get('checked'));
+    }
+    
+    function changeImmediate(checked) {
+        measureControl.setImmediate(checked);
+    }
+    function changeGeodesic(checked) {
+        measureControl.geodesic = checked;
+    }
+</script>

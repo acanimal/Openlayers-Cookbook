@@ -1,0 +1,31 @@
+<!-- Map DOM element -->
+<div id="ch2_bing" style="width: 100%; height: 100%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch2_bing");
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+    
+    var bingApiKey = "AvcVU_Eh1H2_xVcK0EeRO70MD7Zm6qwLhrVC12C3D997DylUewCWaKR9XTZgWwu6";
+    var road = new OpenLayers.Layer.Bing({
+        name: "Road",
+        type: "Road",
+        key: bingApiKey
+    });
+    var hybrid = new OpenLayers.Layer.Bing({
+        name: "Hybrid",        
+        type: "AerialWithLabels",
+        key: bingApiKey
+    });
+    var aerial = new OpenLayers.Layer.Bing({
+        name: "Aerial",
+        type: "Aerial",
+        key: bingApiKey
+    });
+    map.addLayers([road, hybrid, aerial]);
+    
+    map.setCenter(new OpenLayers.LonLat(0, 0), 2);
+    
+</script>

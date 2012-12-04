@@ -1,0 +1,56 @@
+<!-- Map DOM element -->
+<table style="width: 100%; height: 95%;">
+    <tr>
+        <td>
+            <div id="ch3_reading_wkt" style="width: 100%; height: 100%;"></div>
+        </td>
+        <td style="width: 30%; vertical-align: top;">
+            <p>Write the WKT describing features:</p>
+            <textarea id="wktText" data-dojo-type="dijit/form/SimpleTextarea" rows="6" style="width: 100%;">MULTIPOLYGON (((40 40, 20 45, 45 30, 40 40)),((20 35, 45 20, 30 5, 10 10, 10 30, 20 35),(30 20, 20 25, 20 15, 30 20)))</textarea>
+            <button data-dojo-type="dijit/form/Button" onClick="addFeature">Add Feature</button>
+            <button data-dojo-type="dijit/form/Button" onClick="clearLayer">Clear Layer</button>
+            <p>Current layer features:</p>
+            <textarea id="wktFeatures" data-dojo-type="dijit/form/SimpleTextarea" rows="10" style="width: 100%;"></textarea>
+        </td>
+    </tr>
+</table>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch3_reading_wkt");    
+    
+    // Add a WMS layer
+    var wms = new OpenLayers.Layer.WMS("Basic", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: 'basic'
+    });
+    map.addLayer(wms);
+    
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+    map.setCenter(new OpenLayers.LonLat(0,0), 2);
+            
+    // Create some empty vector layers
+    var wktLayer = new OpenLayers.Layer.Vector("wktLayer");
+    
+    // Add layers to the map
+    map.addLayer(wktLayer);
+    
+    function clearLayer() {
+        wktLayer.removeAllFeatures();
+        dijit.byId('wktFeatures').set('value', '');
+    }
+    
+    function addFeature() {
+        // Read features and add to the vector layer
+        var text = dijit.byId('wktText').get('value');
+        var wkt = new OpenLayers.Format.WKT();
+        var features = wkt.read(text);
+        wktLayer.addFeatures(features);
+        
+        // Dump the vector layer features to WKt format
+        var currentWkt = wkt.write(wktLayer.features);
+        dijit.byId('wktFeatures').set('value', currentWkt);
+    }
+</script>

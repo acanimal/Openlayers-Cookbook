@@ -1,0 +1,64 @@
+.olControlLayerSwitcher {
+    font-size: x-small;
+    font-weight: normal;
+}
+.olControlLayerSwitcher .layersDiv {
+    background-color: #38535c;
+    border-radius: 1em;
+    border-width: 3px 0 3px 3px;
+    border-style: solid;
+    border-color: #b6c6ce;
+}
+.olControlLayerSwitcher .layersDiv .baseLbl,
+.olControlLayerSwitcher .layersDiv .dataLbl {
+    font-style: italic;
+    font-weight: bolder;
+}
+
+.olControlOverviewMapContainer {
+    bottom: 20px;
+}
+.olControlOverviewMapElement {
+    background-color: #38535c;
+    border-radius: 1em 0 0 1em;
+    border-width: 3px 0 3px 3px;
+    border-style: solid;
+    border-color: #b6c6ce;
+}
+
+.olControlScaleLine {
+    bottom: 10px;
+    font-size: x-small;
+}
+.olControlScaleLineTop {
+    border: solid 2px #38535c;
+    border-top: none;
+}
+.olControlScaleLineBottom {
+    border: solid 2px #38535c;
+    border-bottom: none;
+}
+.olControlScale {
+    left: 10px;
+    bottom: 40px;
+    font-size: x-small;
+}
+
+div.olControlMousePosition {
+    bottom: 5px;
+    right: 60px;
+    font-size: small;
+}
+
+.olControlPermalink {
+    bottom: 5px;
+    font-size: x-small;
+}
+.olControlPermalink a {
+    color: #38535c;
+    text-decoration: none;
+}
+
+.olControlNavigationHistory {
+    float: right;
+}

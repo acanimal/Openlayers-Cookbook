@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>OpenLayers Cookbook - Antonio Santiago</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <!-- Dojo -->
+        <script type="text/javascript">
+            // Define some Dojo configuration
+            var dojoConfig = {
+                async: true,
+                parseOnLoad: true,
+                idDebug: true
+            };
+        </script>
+        <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js"></script>
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dijit/themes/claro/claro.css"/>
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dijit/themes/claro/document.css"/>
+
+        <!-- OpenLayers -->
+        <script type="text/javascript" src="./js/OpenLayers-2.12/OpenLayers.js"></script>
+        <link rel="stylesheet" href="./js/OpenLayers-2.12/theme/default/style.css" type="text/css">
+
+        <!-- Codemirror -->
+        <script src="js/codemirror-2.34/lib/codemirror.js"></script>
+        <script src="js/codemirror-2.34/mode/xml/xml.js"></script>
+        <script src="js/codemirror-2.34/mode/javascript/javascript.js"></script>
+        <script src="js/codemirror-2.34/mode/css/css.js"></script>
+        <script src="js/codemirror-2.34/mode/htmlmixed/htmlmixed.js"></script>
+        <link rel="stylesheet" href="js/codemirror-2.34/lib/codemirror.css">
+        <link rel="stylesheet" href="js/codemirror-2.34/theme/eclipse.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" type="text/css" href="./css/cookbook.css"> 
+
+        <!-- Application -->
+        <script src="app.js"></script>
+    </head>
+    <body class="claro">
+
+        <div data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'sidebar', gutters:false, liveSplitters:true" id="borderContainer">
+            <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:false, region:'top'">
+                <div data-dojo-type="dijit/MenuBar" id="navMenu">
+                    <div data-dojo-type="dijit/PopupMenuBarItem">
+                        <span><span class="bookTitle">OpenLayers Cookbook</span></span>
+                        <div data-dojo-type="dijit/Menu">
+                            <div id="about" data-dojo-type="dijit/MenuItem">
+                                About
+                                <script type="dojo/method" data-dojo-event="onClick" data-dojo-args="evt">
+                                    aboutDialog.show();
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="splitter:true, region:'center'" style="width: 100%; height: 100%;">
+                <div id="receiptTabs" data-dojo-type="dijit/layout/TabContainer" data-dojo-props="tabStrip:true" style="width: 100%; height: 100%;"></div>
+            </div>
+        </div>
+
+        <!-- About dialog -->
+        <div data-dojo-type="dijit/Dialog" data-dojo-id="aboutDialog" title="OpenLayers Cookbook source code...">
+            <div class="dijitDialogPaneContentArea">
+                <p>
+                    <strong>Version:</strong> 1.1 <br/>
+                    <strong>Author:</strong> Antonio Santiago
+                </p>
+                <p>
+                    These are the recipes of the book <a href="http://www.packtpub.com/openlayers-create-gis-web-applications-cookbook/book" target="_blank">OpenLayers Cookbook</a> 
+                    from <a href="http://www.packtpub.com" target="_blank">PacktPublusing</a>.
+                </p>
+            </div>
+
+            <div class="dijitDialogPaneActionBar">
+                <button data-dojo-type="dijit/form/Button">Close
+                    <script type="dojo/method" data-dojo-event="onClick" data-dojo-args="evt">
+                        aboutDialog.hide();
+                    </script>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<style>
+    table.mouse_location_sample tr td {
+        border: 1px solid #ccc;
+        width: 200px;
+    }
+</style>
+<table class="mouse_location_sample">
+    <tr>
+        <td>
+            <span id="epsg1">0.0</span> <br/>
+            Lon: <strong><span id="lon1">0.0</span></strong> <br/>
+            Lat: <strong><span id="lat1">0.0</span></strong> <br/>
+        </td>
+        <td>
+            <span id="epsg2">0.0</span> <br/>
+            Lon: <strong><span id="lon2">0.0</span></strong> <br/>
+            Lat: <strong><span id="lat2">0.0</span></strong> <br/>
+        </td>
+    </tr>
+</table>
+
+<div id="ch04_mouse_location" style="width: 100%; height: 100%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+    // Create map
+    var map = new OpenLayers.Map("ch04_mouse_location");    
+    var layer = new OpenLayers.Layer.OSM("OpenStreetMap");
+    map.addLayer(layer);
+    map.setCenter(new OpenLayers.LonLat(0,0), 4);
+    
+    OpenLayers.Util.getElement("epsg1").innerHTML = map.getProjection();
+    OpenLayers.Util.getElement("epsg2").innerHTML = "EPSG:4326";
+    
+    OpenLayers.Event.observe(map.div, 'mousemove', mouseMoveListener);
+    
+    function mouseMoveListener(event) {
+        var lonlat = map.getLonLatFromPixel(event.xy);
+                
+        OpenLayers.Util.getElement("lon1").innerHTML = lonlat.lon;
+        OpenLayers.Util.getElement("lat1").innerHTML = lonlat.lat;
+        
+        lonlat.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
+        OpenLayers.Util.getElement("lon2").innerHTML = lonlat.lon;
+        OpenLayers.Util.getElement("lat2").innerHTML = lonlat.lat;
+    }
+
+</script>

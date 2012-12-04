@@ -1,0 +1,122 @@
+<style>
+    .pointer { background-image: url(./recipes/data/gis_icons/pointer.png); }
+    .point { background-image: url(./recipes/data/gis_icons/point.png); }
+    .line { background-image: url(./recipes/data/gis_icons/line.png); }
+    .polygon { background-image: url(./recipes/data/gis_icons/polygon.png); }
+    .area { background-image: url(./recipes/data/gis_icons/area-measure.png); }
+    .length { background-image: url(./recipes/data/gis_icons/length-measure.png); }
+</style>
+
+<div data-dojo-type="dijit/Toolbar">
+    Editor:
+    <div data-dojo-type="dijit/form/ToggleButton" id="pointer"
+         data-dojo-props="iconClass:'dijitEditorIcon pointer', showLabel:false, onClick:pointerAction, checked:true">Pan</div>
+    <div data-dojo-type="dijit/form/ToggleButton" id="point"
+         data-dojo-props="iconClass:'dijitEditorIcon point', showLabel:false, onClick:pointAction">Point</div>
+    <div data-dojo-type="dijit/form/ToggleButton" id="line"
+         data-dojo-props="iconClass:'dijitEditorIcon line', showLabel:false, onClick:lineAction">Line</div>
+    <div data-dojo-type="dijit/form/ToggleButton" id="polygon"
+         data-dojo-props="iconClass:'dijitEditorIcon polygon', showLabel:false, onClick:polygonAction">Polygon</div>
+
+    <span data-dojo-type="dijit/ToolbarSeparator"></span>
+
+    <div data-dojo-type="dijit/form/DropDownButton">
+        <span>Measure</span>
+        <div data-dojo-type="dijit/DropDownMenu">
+            <div data-dojo-type="dijit/MenuItem" data-dojo-props="iconClass:'dijitEditorIcon length', onClick:measureLengthAction">Distance</div>
+            <div data-dojo-type="dijit/MenuItem" data-dojo-props="iconClass:'dijitEditorIcon area', onClick:measureAreaAction">Area</div>
+        </div>
+    </div>
+
+    <span id="value"></span>
+</div>
+
+<div id="ch06_external" style="width: 100%; height: 90%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+    
+    // Create map
+    var map = new OpenLayers.Map("ch06_external");    
+    var osm = new OpenLayers.Layer.OSM();        
+    map.addLayer(osm);
+    
+    map.setCenter(new OpenLayers.LonLat(0, 0), 2);
+    
+    var vectorLayer = new OpenLayers.Layer.Vector("VectorLayer");
+    map.addLayer(vectorLayer);
+    
+    // Add controls
+    var pointControl = new OpenLayers.Control.DrawFeature(vectorLayer, OpenLayers.Handler.Point);
+    var lineControl = new OpenLayers.Control.DrawFeature(vectorLayer, OpenLayers.Handler.Path);
+    var polygonControl = new OpenLayers.Control.DrawFeature(vectorLayer, OpenLayers.Handler.Polygon);
+    var measureControl = new OpenLayers.Control.Measure(OpenLayers.Handler.Path, {
+        persist: true,
+        immediate: true,
+        eventListeners: {
+            'measure': updateMeasure,
+            'measurepartial': updateMeasure
+        }
+    }); 
+    map.addControls([pointControl, lineControl, polygonControl, measureControl]);
+        
+    // Functions to control button actions
+    var currentControl = null;
+    function pointerAction() {
+        _unselectButtons(this);
+        _selectControl(null);
+    }
+    function pointAction(){
+        _unselectButtons(this);
+        _selectControl(pointControl);
+    }
+    function lineAction(){
+        _unselectButtons(this);
+        _selectControl(lineControl);
+    }
+    function polygonAction(){
+        _unselectButtons(this);
+        _selectControl(polygonControl);
+    }
+
+    function measureLengthAction(){
+        _unselectButtons(this);
+        measureControl.updateHandler(OpenLayers.Handler.Path, {persist: true});
+        _selectControl(measureControl);
+    }
+    function measureAreaAction(){
+        _unselectButtons(this);
+        measureControl.updateHandler(OpenLayers.Handler.Polygon, {persist: true});
+        _selectControl(measureControl);
+    }
+
+    function _selectControl(control) {
+        if(currentControl) {
+            currentControl.deactivate();
+        }
+        if(control) {
+            currentControl = control;
+            currentControl.activate();
+        }
+    }
+    function _unselectButtons(context) {
+        var actionButtons = [
+            dijit.registry.byId('pointer'),
+            dijit.registry.byId('point'),
+            dijit.registry.byId('line'),
+            dijit.registry.byId('polygon')
+        ];
+        dojo.forEach(actionButtons, function(button, index){ 
+            if(context==button) return;
+            button.set('checked', false);
+        });
+    }
+    
+    function updateMeasure(event) {
+        var message = event.measure + " " + event.units;
+        if(event.order>1) {
+            message += "2";
+        }
+        dojo.byId('value').innerHTML = message;
+    }
+</script>

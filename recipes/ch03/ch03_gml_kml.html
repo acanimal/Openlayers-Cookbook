@@ -1,0 +1,60 @@
+<!-- Map DOM element -->
+<div id="ch3_gml_kml" style="width: 100%; height: 100%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch3_gml_kml");    
+    
+    var layer = new OpenLayers.Layer.OSM("OpenStreetMap");
+    map.addLayer(layer);
+    
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+    map.setCenter(new OpenLayers.LonLat(0,0), 2);
+            
+    // Europe        
+    map.addLayer(new OpenLayers.Layer.Vector("Europe (GML)", {
+        protocol: new OpenLayers.Protocol.HTTP({
+            url: "./recipes/data/europe.gml",
+            format: new OpenLayers.Format.GML()
+        })
+    }));
+    
+    // Africa
+    map.addLayer(new OpenLayers.Layer.Vector("Africa (GML)", {
+        protocol: new OpenLayers.Protocol.HTTP({
+            url: "./recipes/data/africa.gml",
+            format: new OpenLayers.Format.GML()
+        }),
+        strategies: [new OpenLayers.Strategy.Fixed()]
+    }));
+    
+    // America
+    map.addLayer(new OpenLayers.Layer.Vector("America (KML)", {
+        protocol: new OpenLayers.Protocol.HTTP({
+            url: "./recipes/data/america.kml",
+            format: new OpenLayers.Format.KML()
+        }),
+        strategies: [new OpenLayers.Strategy.Fixed()]
+    }));
+    
+    // Asia
+    map.addLayer(new OpenLayers.Layer.Vector("Asia (KML)", {
+        protocol: new OpenLayers.Protocol.HTTP({
+            url: "./recipes/data/asia.kml",
+            format: new OpenLayers.Format.KML()
+        }),
+        strategies: [new OpenLayers.Strategy.Fixed()]
+    }));
+    
+    // Australia
+    map.addLayer(new OpenLayers.Layer.Vector("Australia (GML)", {
+        protocol: new OpenLayers.Protocol.HTTP({
+            url: "./recipes/data/australia.gml",
+            format: new OpenLayers.Format.GML()
+        }),
+        strategies: [new OpenLayers.Strategy.Fixed()]
+    }));
+        
+</script>

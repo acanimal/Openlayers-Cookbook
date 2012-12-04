@@ -1,0 +1,67 @@
+<style>
+    .square {
+        border: 1px solid #888;
+        background-color: #0099FF;
+        color: #fff;
+        padding: 3px;
+    }
+    .square:hover {
+        background-color: #0086d2;
+    }
+</style>
+<table>
+    <tr>
+        <td><span id="f0" class="square">Feature 1</span></td>
+        <td><span id="f1" class="square">Feature 2</span></td>
+        <td><span id="f2" class="square">Feature 3</span></td>
+        <td><span id="f3" class="square">Feature 4</span></td>
+        <td><span id="f4" class="square">Feature 5</span></td>
+        <td><span id="f5" class="square">Feature 6</span></td>
+    </tr>
+</table>
+<br/>
+<div id="ch04_dom_events" style="width: 100%; height: 100%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+    // Create left map
+    var map = new OpenLayers.Map("ch04_dom_events");    
+    var osm = new OpenLayers.Layer.OSM();        
+    
+    // Create a vector layer with one feature for each previous SPAN element
+    var vectorLayer = new OpenLayers.Layer.Vector("Features");
+    var pointFeatures = [];
+    for(var i=0; i< 6; i++) {
+        // Create the ID
+        var id = "f"+i;
+        // Regiter listeners to handle when mouse enters and leaves the DOM element
+        OpenLayers.Event.observe(OpenLayers.Util.getElement(id), 'mouseover', mouseOverListener);
+        OpenLayers.Event.observe(OpenLayers.Util.getElement(id), 'mouseout', mouseOutListener);
+        
+        // Create a random point
+        var px = Math.random()*360-180;
+        var py = Math.random()*160-80;
+        var pointGeometry = new OpenLayers.Geometry.Point(px, py);
+        OpenLayers.Projection.transform(pointGeometry, new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
+        var pointFeature = new OpenLayers.Feature.Vector(pointGeometry, {
+            elem_id: id
+        });
+        pointFeatures.push(pointFeature);
+    }
+    vectorLayer.addFeatures(pointFeatures);
+    
+    map.addLayers([osm, vectorLayer]);
+    map.setCenter(new OpenLayers.LonLat(0, 0), 1);
+        
+    // Listeners
+    function mouseOverListener(event) {
+        var id = event.target.id;
+        var feature = vectorLayer.getFeaturesByAttribute('elem_id', id);
+        vectorLayer.drawFeature(feature[0], "select");
+    }
+    function mouseOutListener(event) {
+        var id = event.target.id;
+        var feature = vectorLayer.getFeaturesByAttribute('elem_id', id);
+        vectorLayer.drawFeature(feature[0], "default");
+    }
+</script>

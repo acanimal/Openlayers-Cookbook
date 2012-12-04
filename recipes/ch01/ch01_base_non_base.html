@@ -1,0 +1,73 @@
+<table style="width: 100%; height: 95%;">
+    <tr>
+        <td>
+            <p>Map with one non base layer:</p>
+            <div id="ch01_base_nonbase_map_a" style="width: 100%; height: 500px;"></div>
+        </td>
+        <td>
+            <p>Map with two base layers</p>
+            <div id="ch01_base_nonbase_map_b" style="width: 100%; height: 500px;"></div>
+        </td>
+    </tr>
+</table>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    //
+    // Initialize left map
+    //
+    
+    // Create the map using the specified DOM element
+    var map_a = new OpenLayers.Map("ch01_base_nonbase_map_a");
+    // Add a WMS layer
+    var wms = new OpenLayers.Layer.WMS("WMS Coastline", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: 'coastline_01'
+    },
+    {
+        isBaseLayer: true
+    });
+    map_a.addLayer(wms);
+    // Add a WMS layer
+    var topo = new OpenLayers.Layer.WMS("WMS Ground", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: "ground_01"
+    },
+    {
+        opacity: 0.5,
+        isBaseLayer: false
+    });
+    map_a.addLayer(topo);
+    // Add LayerSwitcher control
+    map_a.addControl(new OpenLayers.Control.LayerSwitcher());
+           
+    // Set view to zoom maximum map extent
+    // NOTE: This will fail if there is no base layer defined
+    map_a.setCenter(new OpenLayers.LonLat(-100, 40), 3);
+    
+    //
+    // Initialize right map
+    //
+    
+    // Create the map using the specified DOM element
+    var map_b = new OpenLayers.Map("ch01_base_nonbase_map_b");
+    // Add a WMS layer
+    var wms = new OpenLayers.Layer.WMS("WMS Coastline", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: 'coastline_01'
+    });
+    map_b.addLayer(wms);
+    // Add a WMS layer
+    var topo = new OpenLayers.Layer.WMS("WMS Ground", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: "ground_01"
+    });
+    map_b.addLayer(topo);
+    // Add LayerSwitcher control
+    map_b.addControl(new OpenLayers.Control.LayerSwitcher());
+           
+    // Set view to zoom maximum map extent
+    // NOTE: This will fail if there is no base layer defined
+    map_b.setCenter(new OpenLayers.LonLat(-100, 40), 3);
+</script>

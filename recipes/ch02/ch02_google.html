@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>OpenLayers Cookbook - Antonio Santiago</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <!-- Dojo -->
+        <script type="text/javascript">
+            // Define some Dojo configuration
+            var dojoConfig = {
+                async: true,
+                parseOnLoad: true,
+                idDebug: true
+            };
+        </script>
+        <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js"></script>
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dijit/themes/claro/claro.css"/>
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dijit/themes/claro/document.css"/>
+
+        <!-- Google Maps -->
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.5&sensor=false"></script>
+
+        <!-- OpenLayers -->
+        <script type="text/javascript" src="../../js/OpenLayers-2.12/OpenLayers.js"></script>
+        <link rel="stylesheet" href="../../js/OpenLayers-2.12/theme/default/style.css" type="text/css">
+
+        <!-- Codemirror -->
+        <script src="../../js/codemirror-2.34/lib/codemirror.js"></script>
+        <script src="../../js/codemirror-2.34/mode/xml/xml.js"></script>
+        <script src="../../js/codemirror-2.34/mode/javascript/javascript.js"></script>
+        <script src="../../js/codemirror-2.34/mode/css/css.js"></script>
+        <script src="../../js/codemirror-2.34/mode/htmlmixed/htmlmixed.js"></script>
+        <link rel="stylesheet" href="../../js/codemirror-2.34/lib/codemirror.css">
+        <link rel="stylesheet" href="../../js/codemirror-2.34/theme/eclipse.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" type="text/css" href="../../css/cookbook.css"> 
+
+        <script type="text/javascript">
+            //
+            // Executed once the DOM content is loaded
+            //
+            require([
+                "dojo/ready", 
+                "dojo/parser",
+                "dijit/registry",
+                "dojo/request/xhr",
+                "dijit/layout/ContentPane",
+                "dijit/form/Textarea",
+                "dijit/Dialog"
+            ], function(ready, parser, registry, xhr){
+                ready(function(){
+                    // Initialize map
+                    initializeMap();
+                    
+                    // Load receipt code
+                    xhr('ch02_google_rcp.html', {
+                        handleAs: "text",
+                        preventCache: true
+                    }).then(function(data) {
+                        
+                        var textArea = new dijit.form.Textarea({
+                            value: data,
+                            style: "width: 100%, height: 400px"
+                        });
+                        registry.byId('code').set('content', textArea);
+                        
+                        // Create Codemirror editor
+                        var cm = CodeMirror.fromTextArea(textArea.domNode, {
+                            mode: "htmlmixed",
+                            lineNumbers: true,
+                            readOnly: true,
+                            theme: "eclipse"
+                        });
+                       
+                    }, function(error){
+                        var dialog = new dijit.Dialog({
+                            title: "Error !!!",
+                            content: "Sorry there was an error loading the source code for this receipt.",
+                            style: "width: 200px"
+                        });
+                        dialog.show();
+                    });
+                });
+            });
+            
+            function initializeMap() {
+                // Create the map using the specified DOM element
+                var map = new OpenLayers.Map("ch2_google");
+                map.addControl(new OpenLayers.Control.LayerSwitcher());
+    
+                var streets = new OpenLayers.Layer.Google("Google Streets", {
+                    numZoomLevels: 20
+                });
+                var physical = new OpenLayers.Layer.Google("Google Physical", {
+                    type: google.maps.MapTypeId.TERRAIN
+                });
+                var hybrid = new OpenLayers.Layer.Google("Google Hybrid", {
+                    type: google.maps.MapTypeId.HYBRID, numZoomLevels: 20
+                });
+                var satellite = new OpenLayers.Layer.Google("Google Satellite", {
+                    type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22
+                });
+
+                map.addLayers([physical, streets, hybrid, satellite]);
+    
+                map.setCenter(new OpenLayers.LonLat(0, 0), 2);
+            }
+        </script>
+    </head>
+    <body class="claro">
+
+        <div id="borderContainer" data-dojo-type="dijit/layout/BorderContainer" 
+             data-dojo-props="design:'sidebar', gutters:false, liveSplitters:false" >
+            <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:false, region:'top'">
+                <div data-dojo-type="dijit/MenuBar">
+                    <span class="bookTitle">OpenLayers Cookbook: </span>
+                    <div data-dojo-type="dijit/PopupMenuBarItem">
+                        <span>Using Goole Maps imagery</span>
+                        <div data-dojo-type="dijit/Menu" ></div>
+                    </div>
+                </div>
+            </div>
+
+            <div data-dojo-type="dijit/layout/ContentPane" 
+                 data-dojo-props="splitter:false, region:'center'" style="width: 100%; height: 100%;">
+
+                <div data-dojo-type="dijit/layout/TabContainer" 
+                     data-dojo-props="nested:true" style="width: 100%; height: 100%;" >
+                    <div data-dojo-type="dijit/layout/ContentPane" style="width: 100%; height: 100%;" 
+                         data-dojo-props="title:'Result'">
+
+                        <!-- Map DOM element -->
+                        <div id="ch2_google" style="width: 100%; height: 100%;"></div>
+
+                    </div>
+                    <div id="code" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="title:'Code'" 
+                         style="width: 100%; height: 100%;"></div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

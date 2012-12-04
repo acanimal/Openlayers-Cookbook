@@ -1,0 +1,42 @@
+<div id="ch04_vector_layer_listener" style="width: 100%; height: 100%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create map
+    var map = new OpenLayers.Map("ch04_vector_layer_listener");    
+    var layer = new OpenLayers.Layer.OSM("OpenStreetMap");
+    map.addLayer(layer);
+    map.setCenter(new OpenLayers.LonLat(0,0), 4);
+    
+    var vectorLayer = new OpenLayers.Layer.Vector("States", {
+        protocol: new OpenLayers.Protocol.HTTP({
+            url: "./recipes/data/world_cities.json",
+            format: new OpenLayers.Format.GeoJSON()
+        }),
+        strategies: [new OpenLayers.Strategy.Fixed()],
+        eventListeners: {
+            "beforefeatureadded": featureAddedListener
+        }
+    });
+    map.addLayer(vectorLayer);
+
+    // Define color palette
+    var colors = [
+        "#CC0000",
+        "#FF0000",
+        "#FF3300",
+        "#FF6600",
+        "#FF9900",
+        "#FFCC00",
+        "#FFFF00"
+    ];
+    function featureAddedListener(event){
+        // Set feature color depending on the rank attribute
+        var feature = event.feature;
+        var rank = feature.attributes.POP_RANK;
+        feature.style = OpenLayers.Util.extend({}, OpenLayers.Feature.Vector.style['default']);
+        feature.style.fillColor = colors[rank-1];
+    }
+
+</script>

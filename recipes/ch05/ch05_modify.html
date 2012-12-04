@@ -1,0 +1,95 @@
+<form action="">
+    <button data-dojo-type="dijit/form/ToggleButton" data-dojo-props="iconClass:'dijitCheckBoxIcon', checked: false, onChange: modifyChanged">Modify</button>
+    Reshape: <input id="reshape" data-dojo-type="dijit/form/CheckBox" onChange="changeMode" name="layer"/>
+    Resize: <input id="resize" data-dojo-type="dijit/form/CheckBox" onChange="changeMode" name="layer"/>
+    Rotate <input id="rotate" data-dojo-type="dijit/form/CheckBox" onChange="changeMode" name="layer"/>
+    Drag: <input id="drag" data-dojo-type="dijit/form/CheckBox" onChange="changeMode" name="layer"/>
+    Filter: <select data-dojo-type="dijit/form/Select" id="filter" onChange="changeFilter" name="filter" style="width: 200px;">
+        <option value="ALL" selected>No Filter</option>
+        <option value="POINT">POINT</option>
+        <option value="PATH">PATH</option>
+        <option value="POLYGON">POLYGON</option>
+    </select>
+</form>
+
+<div id="ch05_modify" style="width: 100%; height: 100%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+    // Create map
+    var map = new OpenLayers.Map("ch05_modify");    
+    var osm = new OpenLayers.Layer.OSM();        
+    map.addLayer(osm);
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+    map.setCenter(new OpenLayers.LonLat(0, 0), 3);
+
+    var vectorLayer = new OpenLayers.Layer.Vector("Vector layer");
+    map.addLayer(vectorLayer);
+
+    var editingToolbarControl = new OpenLayers.Control.EditingToolbar(vectorLayer);
+    map.addControl(editingToolbarControl);
+    
+    var modifyControl = new OpenLayers.Control.ModifyFeature(vectorLayer);
+    map.addControl(modifyControl);
+    
+    function modifyChanged(checked) {
+        if(checked) {
+            modifyControl.activate();
+        } else {
+            modifyControl.deactivate();
+        }
+    }
+   
+    //
+    // Modifies the 'mode' property.
+    //
+    function changeMode() {
+        var reshape = dijit.byId("reshape").get("checked");
+        var resize = dijit.byId("resize").get("checked");
+        var rotate = dijit.byId("rotate").get("checked");
+        var drag = dijit.byId("drag").get("checked");
+       
+        var mode = null;
+        if(reshape) {
+            mode |= OpenLayers.Control.ModifyFeature.RESHAPE;
+        }
+        if(resize) {
+            mode |= OpenLayers.Control.ModifyFeature.RESIZE;
+        }
+        if(rotate) {
+            mode |= OpenLayers.Control.ModifyFeature.ROTATE;
+        }
+        if(drag) {
+            mode |= OpenLayers.Control.ModifyFeature.DRAG;
+        }
+        
+        modifyControl.deactivate();
+        modifyControl.mode = mode;
+        modifyControl.activate();
+    }
+    
+    //
+    // Destroy and create a new control to set the 'geometryType' property.
+    //
+    function changeFilter(value) {
+        
+        modifyControl.deactivate();
+        map.removeControl(modifyControl);
+        modifyControl.destroy();
+        
+        var geometryTypes = null;
+        if(value=="POINT") {
+            geometryTypes = ["OpenLayers.Geometry.Point"];
+        } else if(value=="PATH") {
+            geometryTypes = ["OpenLayers.Geometry.LineString"];
+        } else if(value=="POLYGON") {
+            geometryTypes = ["OpenLayers.Geometry.Polygon"];
+        } 
+        modifyControl = new OpenLayers.Control.ModifyFeature(vectorLayer, {
+            geometryTypes: geometryTypes
+        });
+        map.addControl(modifyControl);
+        modifyControl.activate();
+    }
+   
+</script>

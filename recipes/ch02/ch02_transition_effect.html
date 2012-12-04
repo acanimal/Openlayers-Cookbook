@@ -1,0 +1,34 @@
+Transition effect: <input data-dojo-type="dijit/form/CheckBox" data-dojo-props="checked:true" onChange="transitionEffect" /> Resize
+
+<!-- Map DOM element -->
+<div id="ch2_transition_effect" style="width: 100%; height: 100%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch2_transition_effect");
+    
+    // Add a WMS layer
+    var wms = new OpenLayers.Layer.WMS("OpenLayers WMS Basic", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: 'basic'
+    },
+    {
+        wrapDateLine: true,
+        transitionEffect: 'resize'
+    });
+    map.addLayer(wms);   
+    
+    // Center map view
+    map.setCenter(new OpenLayers.LonLat(0,0), 3);
+    
+    function transitionEffect(checked) {
+        if(checked) {
+            wms.transitionEffect = 'resize';
+        } else {
+            wms.transitionEffect = null;
+        }
+    }
+    
+</script>

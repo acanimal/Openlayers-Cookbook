@@ -1,0 +1,141 @@
+<style>
+    table.tm {
+        width: 100%;
+        height: 95%;
+    }
+    table.tm td.left, table.tm td.right {
+        border: 1px solid #ccc;
+        margin: 0;
+        padding: 0;
+    }
+
+    table.tm td.left {
+        width: 75%;
+    }
+    table.tm td.right {
+        width: 25%;
+        vertical-align: top;
+        padding: 5px;
+    }
+    td span {
+        font-weight: bold;
+    }
+</style>
+
+<table class="tm">
+    <tr>
+        <td class="left">
+            <div id="ch07_using_symbolizers" style="width: 100%; height: 95%;"></div>
+        </td>
+        <td class="right">
+            <table>
+                <tr>
+                    <td>Fill Color:</td>
+                    <td>
+                        <div data-dojo-type="dijit/form/DropDownButton">
+                            <span>Color</span>
+                            <div data-dojo-type="dijit/TooltipDialog">
+                                <div id="fillColor" data-dojo-type="dijit/ColorPalette" data-dojo-props="palette:'7x10'"></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Fill Opacity: </td>
+                    <td>
+                        <div id="fillOpacity" data-dojo-type="dijit/form/HorizontalSlider" 
+                             data-dojo-props="value:100, minimum:0, maximum:100, intermediateChanges:true, showButtons:false"
+                             style="width:200px;">
+                            <div data-dojo-type="dijit/form/HorizontalRule" 
+                                 data-dojo-props="container:'bottomDecoration', count:11" style="height:5px;"></div>
+                            <ol data-dojo-type="dijit/form/HorizontalRuleLabels" 
+                                data-dojo-props="container:'bottomDecoration'" style="height:1em;font-size:75%;color:gray;">
+                                <li>0%</li>
+                                <li>50%</li>
+                                <li>100%</li>
+                            </ol>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Stroke Color:</td>
+                    <td>
+                        <div data-dojo-type="dijit/form/DropDownButton">
+                            <span>Color</span>
+                            <div data-dojo-type="dijit/TooltipDialog">
+                                <div id="strokeColor" data-dojo-type="dijit/ColorPalette" data-dojo-props="palette:'7x10'"></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Stroke Width:</td>
+                    <td><input id="strokeWidth" data-dojo-type="dijit/form/NumberSpinner" 
+                               data-dojo-props="value:2, smallDelta:1, constraints:{min:1,max:10}" /></td>
+                </tr>
+                <tr>
+                    <td>Stroke Opacity: </td>
+                    <td>
+                        <div id="strokeOpacity" data-dojo-type="dijit/form/HorizontalSlider" 
+                             data-dojo-props="value:100, minimum:0, maximum:100, intermediateChanges:true, showButtons:false"
+                             style="width:200px;">
+                            <div data-dojo-type="dijit/form/HorizontalRule" 
+                                 data-dojo-props="container:'bottomDecoration', count:11" 
+                                 style="height:5px;"></div>
+                            <ol data-dojo-type="dijit/form/HorizontalRuleLabels" 
+                                data-dojo-props="container:'bottomDecoration'" 
+                                style="height:1em;font-size:75%;color:gray;">
+                                <li>0%</li>
+                                <li>50%</li>
+                                <li>100%</li>
+                            </ol>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Point radius:</td>
+                    <td><input id="pointRadius" 
+                               data-dojo-type="dijit/form/NumberSpinner" 
+                               data-dojo-props="value:4, smallDelta:1, constraints:{min:4,max:15}" /></td>
+                </tr>                
+            </table>
+        </td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch07_using_symbolizers");
+    
+    var osm = new OpenLayers.Layer.OSM();
+    map.addLayer(osm);
+    
+    map.setCenter(new OpenLayers.LonLat(0,0), 3)
+        
+    var vectorLayer = new OpenLayers.Layer.Vector("Features");
+    vectorLayer.events.register('beforefeatureadded', vectorLayer, setFeatureStyle);
+    map.addLayer(vectorLayer);
+    
+    var editingControl = new OpenLayers.Control.EditingToolbar(vectorLayer);
+    map.addControl(editingControl);
+    
+    function setFeatureStyle(event) {
+        var fillColor = dijit.registry.byId('fillColor').get('value');
+        var fillOpacity = dijit.registry.byId('fillOpacity').get('value')/100;
+        var strokeColor = dijit.registry.byId('strokeColor').get('value');
+        var strokeWidth = dijit.registry.byId('strokeWidth').get('value');
+        var strokeOpacity = dijit.registry.byId('strokeOpacity').get('value')/100;
+        var pointRadius = dijit.registry.byId('pointRadius').get('value');
+        
+        var style = OpenLayers.Util.extend({}, OpenLayers.Feature.Vector.style['default']);
+        style.fillColor = fillColor;
+        style.fillOpacity = fillOpacity;
+        style.strokeColor = strokeColor;
+        style.strokeWidth = strokeWidth;
+        style.strokeOpacity = strokeOpacity;
+        style.pointRadius = pointRadius;
+        
+        event.feature.style = style;
+    }
+</script>

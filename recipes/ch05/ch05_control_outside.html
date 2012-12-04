@@ -1,0 +1,43 @@
+<style>
+    .olControlNavToolbar {
+        top: 0px;
+        left: 0px;
+        float: left;
+    }
+    .olControlNavToolbar div {
+        float: left;
+    }
+</style>
+
+<table>
+    <tr>
+        <td>
+            Navigation: <div id="navigation" class="olControlNavToolbar"></div>
+        </td>
+        <td>
+            Position: <div id="mouseposition" style="font-size: smaller;"></div>
+        </td>
+    </tr>
+</table>
+
+<div id="ch05_control_outside" style="width: 100%; height: 90%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+    // Create map
+    var map = new OpenLayers.Map("ch05_control_outside");    
+    var osm = new OpenLayers.Layer.OSM();        
+    map.addLayer(osm);
+
+    map.setCenter(new OpenLayers.LonLat(0, 0), 3);
+
+    var mousePosition = new OpenLayers.Control.MousePosition({
+        div: document.getElementById('mouseposition') 
+    });
+    map.addControl(mousePosition);
+
+    var navToolbarControl = new OpenLayers.Control.NavToolbar({
+        div: document.getElementById("navigation")
+    });
+    map.addControl(navToolbarControl);
+</script>

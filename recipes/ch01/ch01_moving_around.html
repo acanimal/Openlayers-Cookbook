@@ -1,0 +1,287 @@
+<style>
+    table.tm {
+        width: 100%;
+        height: 95%;
+    }
+    table.tm td.left, table.tm td.right {
+        border: 1px solid #ccc;
+        margin: 0;
+        padding: 0;
+    }
+
+    table.tm td.left {
+        width: 75%;
+    }
+    table.tm td.right {
+        width: 25%;
+        vertical-align: top;
+        padding: 5px;
+    }
+    td span {
+        font-weight: bold;
+    }
+</style>
+
+Center: <span id="center"></span> - Zoom: <span id="zoom"></span>
+<table class="tm">
+    <tr>
+        <td class="left">
+            <div id="ch1_moving_around" style="width: 100%; height: 500px;"></div>
+        </td>
+        <td class="right">
+            <table>
+                <tr>
+                    <td>
+                        <!-- moveByPx -->
+                        <table>
+                            <tr>
+                                <td>X pixels</td>
+                                <td>
+                                    <input id="movebyxpix" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 0, smallDelta: 10, constraints: {min:-180,max:180}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Y pixels</td>
+                                <td>
+                                    <input id="movebyypix" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 0, smallDelta: 10, constraints: {min:-90,max:90}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button data-dojo-type="dijit/form/Button" onClick="moveByPx()">moveByPx</button></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <hr/>
+                        <!-- moveTo -->
+                        <table>
+                            <tr>
+                                <td>lon</td>
+                                <td>
+                                    <input id="movetolon" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 0, smallDelta: 10, constraints: {min:-180,max:180}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>lat</td>
+                                <td>
+                                    <input id="movetolat" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 0, smallDelta: 10, constraints: {min:-90,max:90}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>zoom</td>
+                                <td>
+                                    <input id="movetozoom" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 3, smallDelta: 1, constraints: {min:0,max:18}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>forceZoomChange</td>
+                                <td><input id="movetoforceZoomChange" data-dojo-type="dijit/form/CheckBox" 
+                                           data-dojo-props="checked: true"></td>
+                            </tr>
+                            <tr>
+                                <td>dragging</td>
+                                <td><input id="movetodragging" data-dojo-type="dijit/form/CheckBox"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button data-dojo-type="dijit/form/Button" onClick="moveTo()">moveTo</button></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <hr/>
+                        <!-- setCenter -->
+                        <table>
+                            <tr>
+                                <td>lon</td>
+                                <td>
+                                    <input id="setCenterlon" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 0, smallDelta: 10, constraints: {min:-180,max:180}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>lat</td>
+                                <td>
+                                    <input id="setCenterlat" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 0, smallDelta: 10, constraints: {min:-90,max:90}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>zoom</td>
+                                <td>
+                                    <input id="setCenterzoom" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 3, smallDelta: 1, constraints: {min:0,max:18}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>forceZoomChange</td>
+                                <td><input id="setCenterforceZoomChange" data-dojo-type="dijit/form/CheckBox" 
+                                           data-dojo-props="checked: true"></td>
+                            </tr>
+                            <tr>
+                                <td>dragging</td>
+                                <td><input id="setCenterdragging" data-dojo-type="dijit/form/CheckBox"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button data-dojo-type="dijit/form/Button" onClick="setCenter()">setCenter</button></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <hr/>
+                        <!-- pan -->
+                        <table>
+                            <tr>
+                                <td>X pixels</td>
+                                <td>
+                                    <input id="panxpix" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 0, smallDelta: 10, constraints: {min:-180,max:180}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Y pixels</td>
+                                <td>
+                                    <input id="panypix" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 0, smallDelta: 10, constraints: {min:-90,max:90}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>animate</td>
+                                <td><input id="pananimate" data-dojo-type="dijit/form/CheckBox" 
+                                           data-dojo-props="checked: true"></td>
+                            </tr>
+                            <tr>
+                                <td>dragging</td>
+                                <td><input id="pandragging" data-dojo-type="dijit/form/CheckBox"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button data-dojo-type="dijit/form/Button" onClick="pan()">pan</button></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <hr/>
+                        <!-- panTo -->
+                        <table>
+                            <tr>
+                                <td>lon</td>
+                                <td>
+                                    <input id="panTolon" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 0, smallDelta: 10, constraints: {min:-180,max:180}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>lat</td>
+                                <td>
+                                    <input id="panTolat" data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                           data-dojo-props="value: 0, smallDelta: 10, constraints: {min:-90,max:90}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button data-dojo-type="dijit/form/Button" onClick="panTo()">panTo</button></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch1_moving_around", {
+        controls: [],
+        eventListeners: {
+            "move": changeListener,
+            "moveend": changeListener,
+            "zoomend": changeListener
+        }
+    });
+   
+    var wms = new OpenLayers.Layer.WMS("OpenLayers WMS Basic", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: 'basic'
+    });
+    map.addLayer(wms);
+    
+    // Center the view at some place
+    map.setCenter(new OpenLayers.LonLat(0, 0), 2);
+
+    // Listeners
+    function changeListener() {
+        var center = map.getCenter();
+        document.getElementById("center").innerHTML = "("+center.lon + " lon , " + center.lat + " lat)";
+        var zoom = map.getZoom();
+        document.getElementById("zoom").innerHTML = zoom + " level";
+    }
+
+    // Button events
+    function moveByPx() {
+        var x = dijit.byId('movebyxpix').get('value');
+        var y = dijit.byId('movebyypix').get('value');
+        
+        map.moveByPx(x,y);
+    }
+    function moveTo() {
+        var lon = dijit.byId('movetolon').get('value');
+        var lat = dijit.byId('movetolat').get('value');
+        var zoom = dijit.byId('movetozoom').get('value');
+        var force = dijit.byId('movetoforceZoomChange').get('checked');
+        var drag = dijit.byId('movetodragging').get('checked');
+        
+        map.moveTo(new OpenLayers.LonLat(lon, lat), zoom, {
+            forceZoomChange: force,
+            dragging: drag
+        });
+    }
+    function setCenter() {
+        var lon = dijit.byId('setCenterlon').get('value');
+        var lat = dijit.byId('setCenterlat').get('value');
+        var zoom = dijit.byId('setCenterzoom').get('value');
+        var force = dijit.byId('setCenterforceZoomChange').get('checked');
+        var drag = dijit.byId('setCenterdragging').get('checked');
+        
+        map.setCenter(new OpenLayers.LonLat(lon, lat), zoom, {
+            forceZoomChange: force,
+            dragging: drag
+        });
+    }
+    function pan() {
+        var x = dijit.byId('panxpix').get('value');
+        var y = dijit.byId('panypix').get('value');
+        var anim = dijit.byId('pananimate').get('checked');
+        var drag = dijit.byId('pandragging').get('checked');
+        
+        map.pan(x,y, {
+            animate: anim,
+            dragging: drag
+        });
+    }
+    function panTo() {
+        var lon = dijit.byId('panTolon').get('value');
+        var lat = dijit.byId('panTolat').get('value');
+        
+        map.panTo(new OpenLayers.LonLat(lon, lat));
+    }
+</script>

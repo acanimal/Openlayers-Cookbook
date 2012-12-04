@@ -1,0 +1,108 @@
+<button data-dojo-type="dijit/form/ToggleButton" data-dojo-props="iconClass:'dijitCheckBoxIcon', checked: true, onChange: layerSwitcherChanged">LayerSwitcher</button>
+<button data-dojo-type="dijit/form/ToggleButton" data-dojo-props="iconClass:'dijitCheckBoxIcon', checked: true, onChange: panZoomBarChanged">PanZoomBar</button>
+<button data-dojo-type="dijit/form/ToggleButton" data-dojo-props="iconClass:'dijitCheckBoxIcon', checked: true, onChange: mousePositionChanged">MousePosition</button>
+<button data-dojo-type="dijit/form/ToggleButton" data-dojo-props="iconClass:'dijitCheckBoxIcon', checked: true, onChange: overviewMapChanged">OverviewMap</button>
+<button data-dojo-type="dijit/form/ToggleButton" data-dojo-props="iconClass:'dijitCheckBoxIcon', checked: true, onChange: graticuleChanged">Graticule</button>
+<button data-dojo-type="dijit/form/ToggleButton" data-dojo-props="iconClass:'dijitCheckBoxIcon', checked: true, onChange: scaleChanged">Scale</button>
+<button data-dojo-type="dijit/form/ToggleButton" data-dojo-props="iconClass:'dijitCheckBoxIcon', checked: true, onChange: scaleLineChanged">ScaleLine</button>
+<button data-dojo-type="dijit/form/ToggleButton" data-dojo-props="iconClass:'dijitCheckBoxIcon', checked: true, onChange: permalinkChanged">Permalink</button>
+
+<div id="ch05_visual_controls" style="width: 100%; height: 90%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+    // Create map
+    var map = new OpenLayers.Map("ch05_visual_controls", {
+        controls: []
+    });    
+    var osm = new OpenLayers.Layer.OSM();        
+    map.addLayer(osm);
+    
+    // Add controls
+    var layerSwitcher = new OpenLayers.Control.LayerSwitcher({'ascending':false});
+    var panZoomBar = new OpenLayers.Control.PanZoomBar();
+    var mousePosition = new OpenLayers.Control.MousePosition();
+    var overviewMap = new OpenLayers.Control.OverviewMap({maximized: true});
+    var graticule = new OpenLayers.Control.Graticule({displayInLayerSwitcher: false});
+    var scale = new OpenLayers.Control.Scale();
+    var scaleline = new OpenLayers.Control.ScaleLine();
+    var permalink = new OpenLayers.Control.Permalink();
+    
+    map.addControls([layerSwitcher, panZoomBar, mousePosition, overviewMap,
+        graticule, scale, scaleline, permalink]);
+    
+    map.setCenter(new OpenLayers.LonLat(0, 0), 2);
+
+    function layerSwitcherChanged(checked) {
+        if(checked) {
+            layerSwitcher = new OpenLayers.Control.LayerSwitcher({'ascending':false});
+            map.addControl(layerSwitcher);
+        } else {
+            map.removeControl(layerSwitcher);
+            layerSwitcher.destroy();
+        }
+    }
+    function panZoomBarChanged(checked) {
+        if(checked) {
+            panZoomBar = new OpenLayers.Control.PanZoomBar();
+            map.addControl(panZoomBar);
+        } else {
+            map.removeControl(panZoomBar);
+            panZoomBar.destroy();
+        }
+    }
+    function mousePositionChanged(checked) {
+        if(checked) {
+            mousePosition = new OpenLayers.Control.MousePosition();
+            map.addControl(mousePosition);
+        } else {
+            map.removeControl(mousePosition);
+            mousePosition.destroy();
+        }
+    }
+    function overviewMapChanged(checked) {
+        if(checked) {
+            overviewMap = new OpenLayers.Control.OverviewMap({maximized: true});
+            map.addControl(overviewMap);
+        } else {
+            map.removeControl(overviewMap);
+            overviewMap.destroy();
+        }
+    }
+    function graticuleChanged(checked) {
+        if(checked) {
+            graticule = new OpenLayers.Control.Graticule({displayInLayerSwitcher: false});
+            map.addControl(graticule);
+        } else {
+            map.removeControl(graticule);
+            graticule.destroy();
+        }
+    }
+    function scaleChanged(checked) {
+        if(checked) {
+            scale = new OpenLayers.Control.Scale();
+            map.addControl(scale);
+        } else {
+            map.removeControl(scale);
+            scale.destroy();
+        }
+    }
+    function scaleLineChanged(checked) {
+        if(checked) {
+            scaleline = new OpenLayers.Control.ScaleLine();
+            map.addControl(scaleline);
+        } else {
+            map.removeControl(scaleline);
+            scaleline.destroy();
+        }
+    }
+    function permalinkChanged(checked) {
+        if(checked) {
+            permalink = new OpenLayers.Control.Permalink();
+            map.addControl(permalink);
+        } else {
+            map.removeControl(permalink);
+            permalink.destroy();
+        } 
+    }
+</script>

@@ -1,0 +1,57 @@
+<table>
+    <tr>
+        <td>
+            Opacity:
+        </td>
+        <td>
+            <div data-dojo-type="dijit/form/HorizontalSlider" 
+                 data-dojo-props="value:100, minimum:0, maximum:100, intermediateChanges:true, showButtons:false" 
+                 style="width:300px;" onChange="opacity">
+                <div data-dojo-type="dijit/form/HorizontalRule"
+                     data-dojo-props="count:11, container:'bottomDecoration'" style="height:5px;"></div>
+                <ol data-dojo-type="dijit/form/HorizontalRuleLabels" 
+                    data-dojo-props="container:'bottomDecoration'" style="height:1em;font-size:75%;color:gray;">
+                    <li>0%</li>
+                    <li>50%</li>
+                    <li>100%</li>
+                </ol>
+            </div> 
+        </td>
+    </tr>
+</table>
+
+<!-- Map DOM element -->
+<div id="ch2_opacity" style="width: 100%; height: 100%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch2_opacity");
+    
+    // Add a WMS layer
+    var wms = new OpenLayers.Layer.WMS("OpenLayers WMS Basic", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: 'basic'
+    });
+    map.addLayer(wms);  
+    
+    // Add coast line layer
+    var wms2 = new OpenLayers.Layer.WMS("Coast Line", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: 'coastline_01,coastline_02'
+    },
+    {
+        isBaseLayer: false
+    });
+    map.addLayer(wms2); 
+    
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+    
+    // Center map view
+    map.setCenter(new OpenLayers.LonLat(0,0), 3);
+    
+    function opacity(value) {
+        wms2.setOpacity(value/100);
+    }
+</script>

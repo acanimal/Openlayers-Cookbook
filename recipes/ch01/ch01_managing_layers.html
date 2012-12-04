@@ -1,0 +1,115 @@
+<style>
+    table.tm {
+        width: 100%;
+        height: 100%;
+    }
+    table.tm td.left, table.tm td.right {
+        border: 1px solid #ccc;
+        margin: 0;
+        padding: 0;
+    }
+
+    table.tm td.left {
+        width: 75%;
+    }
+    table.tm td.right {
+        width: 25%;
+        vertical-align: top;
+        padding: 5px;
+    }
+    table.tb {
+        border: 0;
+
+    }
+</style>
+<table class="tm">
+    <tr>
+        <td class="left">
+            <div id="ch1_managing_layers" style="width: 100%; height: 500px;"></div>
+        </td>
+        <td class="right">
+            <p>Maximize the layer switcher control to see the map layers and move it clicking the buttons:</p>
+
+            <table class="tb">
+                <tr>
+                    <td>Select layer:</td>
+                    <td>
+                        <select id="layerSelection" data-dojo-type="dijit/form/Select">
+                            <option value="MapQuest-OSM">MapQuest-OSM</option>
+                            <option value="MapQuest-Aerial">MapQuest-Aerial</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Move to top:</td>
+                    <td><button data-dojo-type="dijit/form/Button" onClick="topLayer">Top</button></td>
+                </tr>
+                <tr>
+                    <td>Move up:</td>
+                    <td><button data-dojo-type="dijit/form/Button" onClick="raiseLayer">Up</button></td>
+                </tr>
+                <tr>
+                    <td>Move down:</td>
+                    <td><button data-dojo-type="dijit/form/Button" onClick="lowerLayer">Down</button></td>
+                </tr>
+                <tr>
+                    <td>Move to bottom:</td>
+                    <td><button data-dojo-type="dijit/form/Button" onClick="bottomLayer">Bottom</button></td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+</table>
+
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch1_managing_layers", {
+        allOverlays: true
+    });
+
+    // Add some OSM based layers using an array of URL sources
+    var arrayOSM = ["http://otile1.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg",
+        "http://otile2.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg",
+        "http://otile3.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg",
+        "http://otile4.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg"];
+    var arrayAerial = ["http://oatile1.mqcdn.com/tiles/1.0.0/sat/${z}/${x}/${y}.jpg",
+        "http://oatile2.mqcdn.com/tiles/1.0.0/sat/${z}/${x}/${y}.jpg",
+        "http://oatile3.mqcdn.com/tiles/1.0.0/sat/${z}/${x}/${y}.jpg",
+        "http://oatile4.mqcdn.com/tiles/1.0.0/sat/${z}/${x}/${y}.jpg"];
+
+    var baseAerial = new OpenLayers.Layer.OSM("MapQuest-Aerial", arrayAerial);
+    var baseOSM = new OpenLayers.Layer.OSM("MapQuest-OSM", arrayOSM, {opacity: 0.6});
+    map.addLayers([baseAerial, baseOSM]);
+
+    // Add LayerSwitcher control
+    map.addControl(new OpenLayers.Control.LayerSwitcher({ascending: false}));
+    // Center the view at some place
+    map.setCenter(new OpenLayers.LonLat(-100, 40), 4);
+        
+    // Button events
+    function raiseLayer() {
+        var layerName = dijit.byId('layerSelection').get('value');
+        var layer = map.getLayersByName(layerName)[0];
+        map.raiseLayer(layer, 1);
+    }
+    function lowerLayer() {
+        var layerName = dijit.byId('layerSelection').get('value');
+        var layer = map.getLayersByName(layerName)[0];
+        map.raiseLayer(layer, -1);
+    }
+    function topLayer() {
+        var layerName = dijit.byId('layerSelection').get('value');
+        var layer = map.getLayersByName(layerName)[0];
+        var lastIndex = map.getNumLayers()-1;
+        map.setLayerIndex(layer, lastIndex);
+    }
+    function bottomLayer() {
+        var layerName = dijit.byId('layerSelection').get('value');
+        var layer = map.getLayersByName(layerName)[0];
+        map.setLayerIndex(layer, 0);
+    }
+</script>

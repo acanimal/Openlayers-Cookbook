@@ -1,0 +1,104 @@
+[
+    {
+        "name": "Chapter01 - Mapping Basics",
+        "recipes": [
+            {"name": "Creating simple map", "url": "recipes/ch01/ch01_simple_map.html"},
+            {"name": "Base and non-base layers", "url": "recipes/ch01/ch01_base_non_base.html"},
+            {"name": "Avoiding base layers", "url": "recipes/ch01/ch01_avoid_baselayer.html"},
+            {"name": "Playing with map options", "url": "recipes/ch01/ch01_playing_map_options.html"},
+            {"name": "Managing map's stack layers", "url": "recipes/ch01/ch01_managing_layers.html"},
+            {"name": "Managing controls", "url": "recipes/ch01/ch01_managing_controls.html"},
+            {"name": "Moving around the map view", "url": "recipes/ch01/ch01_moving_around.html"},
+            {"name": "Restricting the map extent", "url": "recipes/ch01/ch01_restricting_view.html"},
+            {"name": "Tweening", "url": "recipes/ch01/ch01_tweening.html"}
+        ]
+    },
+    {
+        "name": "Chapter02 - Raster Layers",
+        "recipes": [
+            {"name": "Using Goole Maps imagery >>", "url": "recipes/ch02/ch02_google.html", "external" : true},
+            {"name": "Using Bing imagery", "url": "recipes/ch02/ch02_bing.html"},
+            {"name": "Adding WMS layer", "url": "recipes/ch02/ch02_wms_layer.html"},        
+            {"name": "Wrapping date line", "url": "recipes/ch02/ch02_wrapdateline.html"},
+            {"name": "Transition effect", "url": "recipes/ch02/ch02_transition_effect.html"},
+            {"name": "Changing layer opacity", "url": "recipes/ch02/ch02_opacity.html"},
+            {"name": "Using WMS with singleTile mode", "url": "recipes/ch02/ch02_wms_singleTile.html"},
+            {"name": "Buffering the layer data", "url": "recipes/ch02/ch02_improving_navigation.html"},
+            {"name": "Creating an Image layer", "url": "recipes/ch02/ch02_image.html"},
+            {"name": "Knowing the tile names", "url": "recipes/ch02/ch02_tilenames.html"},
+            {"name": "Setting the tile size", "url": "recipes/ch02/ch02_tilesize.html"}
+        ]
+    },
+    {
+        "name": "Chapter03 - Vector Layers",
+        "recipes": [
+            {"name": "Adding a GML layer", "url": "recipes/ch03/ch03_gml.html"},
+            {"name": "Adding a KML layer", "url": "recipes/ch03/ch03_kml.html"},
+            {"name": "Creates features programmatically", "url": "recipes/ch03/ch03_features_programmatically.html"},
+            {"name": "Reading and creating features from a WKT", "url": "recipes/ch03/ch03_reading_wkt.html"},
+            {"name": "Adding markers", "url": "recipes/ch03/ch03_markers.html"},
+            {"name": "Using point features as markers", "url": "recipes/ch03/ch03_feature_markers.html"},
+            {"name": "Working with popups", "url": "recipes/ch03/ch03_popups.html"},
+            {"name": "Adding features from a WFS server", "url": "recipes/ch03/ch03_wfs.html"},
+            {"name": "Using the cluster strategy", "url": "recipes/ch03/ch03_cluster_strategy.html"},
+            {"name": "Filtering features in WFS requests", "url": "recipes/ch03/ch03_filtering.html"},
+            {"name": "Filtering features with CQL", "url": "recipes/ch03/ch03_filtering_cql.html"},
+            {"name": "Reading data using Potocols directly", "url": "recipes/ch03/ch03_protocol.html"}
+        ]
+    },
+    {
+        "name": "Chapter04 - Events",
+        "recipes": [
+            {"name": "Creating a side by side map comparator", "url": "recipes/ch04/ch04_side_by_side.html"},
+            {"name": "Implementing a work in progress indicator for map layers", "url": "recipes/ch04/ch04_work_progress.html"},
+            {"name": "Listening for vector layer features' events", "url": "recipes/ch04/ch04_vector_layer_listener.html"},
+            {"name": "Listening for non OpenLayers events", "url": "recipes/ch04/ch04_dom_events.html"},
+            {"name": "Getting the mouse location within the map", "url": "recipes/ch04/ch04_mouse_location.html"}
+        ]
+    },
+    {
+        "name": "Chapter05 - Controls",
+        "recipes": [
+            {"name": "Adding and removing controls", "url": "recipes/ch05/ch05_visual_controls.html"},
+            {"name": "Adding a navigation history control", "url": "recipes/ch05/ch05_nav_history.html"},
+            {"name": "Working with geolocation", "url": "recipes/ch05/ch05_geolocating.html"},
+            {"name": "Placing controls outside the map", "url": "recipes/ch05/ch05_control_outside.html"},
+            {"name": "Editing features on multiple vector layers", "url": "recipes/ch05/ch05_editing_vector.html"},
+            {"name": "Modifying features", "url": "recipes/ch05/ch05_modify.html"},
+            {"name": "Measuring distances and areas", "url": "recipes/ch05/ch05_measure.html"},
+            {"name": "Selecting and transforming features", "url": "recipes/ch05/ch05_selectfeatures.html"},
+            {"name": "Getting feature information from data source", "url": "recipes/ch05/ch05_getfeature.html"},
+            {"name": "Getting information from WMS server", "url": "recipes/ch05/ch05_wmsfeatureinfo.html"}
+        ]
+    },
+    {
+        "name": "Chapter06 - Theming",
+        "recipes": [
+            {"name": "Delimiting tiles in a raster layer", "url": "recipes/ch06/ch06_tile_borders.html"},
+            {"name": "Creating a new theme >>", "url": "recipes/ch06/ch06_theme.html", "external" : true},
+            {"name": "Starting actions outside the controls", "url": "recipes/ch06/ch06_external_controls.html"}
+        ]
+    },
+    {
+        "name": "Chapter07 - Styling",
+        "recipes": [
+            {"name": "Styling features using symbolizers", "url": "recipes/ch07/ch07_using_symbolizers.html"},
+            {"name": "Improving style using StyleMap and feature's attributes replacement", "url": "recipes/ch07/ch07_stylemap.html"},
+            {"name": "Playing with StyleMap and the render intents", "url": "recipes/ch07/ch07_rendering_intents.html"},
+            {"name": "Working with unique value rules", "url": "recipes/ch07/ch07_unique_value_rules.html"},
+            {"name": "Defining custom rules to style features", "url": "recipes/ch07/ch07_custom_rules.html"},
+            {"name": "Styling clustered features", "url": "recipes/ch07/ch07_cluster_features.html"}   
+        ]
+    },
+    {
+        "name": "Chapter08 - Beyond the basics",
+        "recipes": [
+            {"name": "Working with projections", "url": "recipes/ch08/ch08_projections.html"},
+            {"name": "Retrieveing remote data", "url": "recipes/ch08/ch08_requesting.html"},
+            {"name": "Creating a custom control", "url": "recipes/ch08/ch08_drawing_cross.html"},
+            {"name": "Making an animation with image layers", "url": "recipes/ch08/ch08_animating_raster.html"},
+            {"name": "Creating a custom renderer", "url": "recipes/ch08/ch08_renderer.html"},
+            {"name": "Selecting features intersecting with a line", "url": "recipes/ch08/ch08_selecting.html"}
+        ]
+    }
+]

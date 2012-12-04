@@ -1,0 +1,48 @@
+<div id="ch07_cluster_number_style" style="width: 100%; height: 95%;"></div>
+
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch07_cluster_number_style");
+    
+    var osm = new OpenLayers.Layer.OSM();
+    map.addLayer(osm);
+    
+    map.setCenter(new OpenLayers.LonLat(0,20).transform(new OpenLayers.Projection("EPSG:4326"), 
+    new OpenLayers.Projection("EPSG:900913")), 2);
+        
+    var cities = new OpenLayers.Layer.Vector("World Cities (GeoJSON)", {
+        protocol: new OpenLayers.Protocol.HTTP({
+            url: "./recipes/data/world_cities.json",
+            format: new OpenLayers.Format.GeoJSON()
+        }),
+        strategies: [new OpenLayers.Strategy.Fixed(), new OpenLayers.Strategy.Cluster({distance: 25})],
+        styleMap: new OpenLayers.StyleMap({
+            'default': new OpenLayers.Style({
+                strokeWidth: '${strokeFunction}',
+                strokeOpacity: 0.5,
+                strokeColor: "#88aaaa",
+                fillColor: "#99CC55",
+                fillOpacity: 0.5,
+                pointRadius: '${radiusfunction}',
+                label: "${count}",
+                fontColor: "#ffffff"
+            }, {
+                context: {
+                    strokeFunction: function(feature) {
+                        var count = feature.attributes.count;
+                        var stk = Math.max(0.1 * count, 1);
+                        return stk;
+                    },
+                    radiusfunction: function(feature) {
+                        var count = feature.attributes.count;
+                        var radius = Math.max(0.60 * count, 7);
+                        return radius;
+                    }
+                }
+            })
+        })
+    });
+    map.addLayer(cities);
+    
+</script>

@@ -1,0 +1,51 @@
+<table style="width: 100%; height: 95%;">
+    <tr>
+        <td>
+            <div id="ch04_map_a" style="width: 100%; height: 100%;"></div>
+        </td>
+        <td>
+            <div id="ch04_map_b" style="width: 100%; height: 100%;"></div>
+        </td>
+    </tr>
+</table>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create left map
+    var map_a = new OpenLayers.Map("ch04_map_a");    
+    var arrayAerial = ["http://oatile1.mqcdn.com/tiles/1.0.0/sat/${z}/${x}/${y}.jpg",
+        "http://oatile2.mqcdn.com/tiles/1.0.0/sat/${z}/${x}/${y}.jpg",
+        "http://oatile3.mqcdn.com/tiles/1.0.0/sat/${z}/${x}/${y}.jpg",
+        "http://oatile4.mqcdn.com/tiles/1.0.0/sat/${z}/${x}/${y}.jpg"];
+    var layer_a = new OpenLayers.Layer.OSM("MapQuest-Aerial", arrayAerial);
+    map_a.addLayer(layer_a);
+    map_a.setCenter(new OpenLayers.LonLat(0,0), 2);
+    
+    // Create rigth map
+    var map_b = new OpenLayers.Map("ch04_map_b");    
+    var arrayOSM = ["http://otile1.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg",
+        "http://otile2.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg",
+        "http://otile3.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg",
+        "http://otile4.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg"];
+    var layer_b = new OpenLayers.Layer.OSM("MapQuest-OSM", arrayOSM);
+    map_b.addLayer(layer_b);
+    map_b.setCenter(new OpenLayers.LonLat(0,0), 2);
+    
+    // Register events on map_a using 'on':
+    map_a.events.on({
+        "move": moveListener
+    });
+    
+    // Register events on map_a using 'register':
+    map_b.events.register("move", null, moveListener);
+    
+    // Listener functions
+    function moveListener(event) {
+        if(event.object == map_a) {
+            map_b.setCenter(map_a.getCenter());
+        } else {
+            map_a.setCenter(map_b.getCenter());
+        }
+    } 
+</script>

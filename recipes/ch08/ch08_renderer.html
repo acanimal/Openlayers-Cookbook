@@ -1,0 +1,47 @@
+<!-- Map DOM element -->
+<div id="ch08_renderer" style="width: 100%; height: 95%;"></div>
+
+<script type="text/javascript" src="./recipes/ch08/gradientRenderer.js"></script>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch08_renderer");
+    
+    var osm = new OpenLayers.Layer.OSM();
+    map.addLayer(osm);
+    
+    // Certer viewport
+    var center = new OpenLayers.LonLat(-80,40);
+    center.transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
+    map.setCenter(center, 5);
+    
+    // Define styles for POP-RANK attribute.
+    var styles = {
+        7: { pointRadius: 5, label: "${POP_RANK}", fillColor: "#FFF8DC", fillOpacity: 0.6},
+        6: { pointRadius: 8, label: "${POP_RANK}", fillColor: "#FFE4C4", fillOpacity: 0.6},
+        5: { pointRadius: 11, label: "${POP_RANK}", fillColor: "#DEB887", fillOpacity: 0.6},
+        4: { pointRadius: 14, label: "${POP_RANK}", fillColor: "#DAA520", fillOpacity: 0.7},
+        3: { pointRadius: 16, label: "${POP_RANK}", fillColor: "#CD853F", fillOpacity: 0.8},
+        2: { pointRadius: 19, label: "${POP_RANK}", fillColor: "#A0522D", fillOpacity: 0.9},
+        1: { pointRadius: 22, label: "${POP_RANK}", fillColor: "#B22222", fillOpacity: 1.0}
+    };
+
+    // Create the StyleMap
+    var styleMap = new OpenLayers.StyleMap();
+    styleMap.addUniqueValueRules("default", "POP_RANK", styles);
+    
+    // Create the vector layer
+    var vectorLayer = new OpenLayers.Layer.Vector("Cities", {
+        styleMap: styleMap,
+        renderers: ["Gradient"],
+        protocol: new OpenLayers.Protocol.HTTP({
+            url: "./recipes/data/world_cities.json",
+            format: new OpenLayers.Format.GeoJSON()
+        }),
+        strategies: [new OpenLayers.Strategy.Fixed()]
+    });
+    map.addLayer(vectorLayer);
+    
+</script>

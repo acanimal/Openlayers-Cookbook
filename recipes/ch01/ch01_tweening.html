@@ -1,0 +1,54 @@
+Move the map using arrow keys <br/>
+<!-- Map DOM element -->
+<div id="ch1_tweening" style="width: 100%; height: 95%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+    OpenLayers.Bounce = {
+        /**
+         * Function: easeIn
+         * 
+         * Parameters:
+         * t - {Float} time
+         * b - {Float} beginning position
+         * c - {Float} total change
+         * d - {Float} duration of the transition
+         */
+        bounce: function(t,b,c,d) {
+            if ((t/=d) < (1/2.75)) {
+                return c*(7.5625*t*t) + b;
+            } else if (t < (2/2.75)) {
+                return c*(7.5625*(t-=(1.5/2.75))*t + .75) + b;
+            } else if (t < (2.5/2.75)) {
+                return c*(7.5625*(t-=(2.25/2.75))*t + .9375) + b;
+            } else {
+                return c*(7.5625*(t-=(2.625/2.75))*t + .984375) + b;
+            }  
+        },
+
+        CLASS_NAME: "OpenLayers.Bounce"
+    };
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch1_tweening", { 
+        panMethod: OpenLayers.Bounce.bounce,
+        panDuration: 75
+    });
+    
+    // Add a WMS layer
+    var wms = new OpenLayers.Layer.WMS("OpenLayers WMS Basic", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: 'basic'
+    },
+    {
+        wrapDateLine: false
+    });
+    map.addLayer(wms);
+    
+    // Add control to move the map with keyboard
+    map.addControl(new OpenLayers.Control.KeyboardDefaults());
+    
+    // Center view
+    map.setCenter(new OpenLayers.LonLat(0,0), 3);
+        
+</script>

@@ -1,0 +1,76 @@
+<span data-dojo-type="dijit/ProgressBar" style="width: 100px;" id="progress"
+      data-dojo-props="indeterminate:true, label:''"></span>
+
+<div id="ch04_work_progress" style="width: 100%; height: 100%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+    OpenLayers.ProxyHost = "./utils/proxy.php?url=";
+    
+    // Create left map
+    var map = new OpenLayers.Map("ch04_work_progress");    
+    var wms = new OpenLayers.Layer.WMS("Basic", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: 'basic'
+    });        
+    var wfs = new OpenLayers.Layer.Vector("States", {
+        protocol: new OpenLayers.Protocol.WFS({
+            url: "http://demo.opengeo.org/geoserver/wfs",
+            featureType: "states",
+            featureNS: "http://www.openplans.org/topp"
+        }),
+        strategies: [new OpenLayers.Strategy.BBOX()]
+    });
+    map.addLayers([wms, wfs]);
+        
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+    map.setCenter(new OpenLayers.LonLat(-100, 41), 8);
+        
+    // Register events on layers using 'on':
+    wms.events.on({
+        "loadstart": updateLoader,
+        "loadend": updateLoader, 
+        "loadcancel": updateLoader
+    });
+    wfs.events.on({
+        "loadstart": updateLoader,
+        "loadend": updateLoader, 
+        "loadcancel": updateLoader
+    });
+    
+    // Listener functions
+    var wmsLoading = false;
+    var wfsLoading = false;
+    function updateLoader(event) {
+        var progress = dijit.byId('progress');
+        if(event.type == "loadstart") {
+            if(event.object == wms) {
+                wmsLoading = true;
+            }
+            if(event.object == wfs) {
+                wfsLoading = true;
+            }
+            
+            var label = "";
+            if(wmsLoading) {
+                label += "WMS ";
+            }
+            if(wfsLoading) {
+                label += "WFS";
+            }
+                
+            progress.set('value', 'Infinity');
+            progress.set('label', label);
+            dojo.style(progress.domNode, "visibility", "visible");
+        } else {
+            if(event.object == wms) {
+                wmsLoading = false;
+            }
+            if(event.object == wfs) {
+                wfsLoading = false;
+            }
+            progress.set('value', '0');
+            dojo.style(progress.domNode, "visibility", "hidden");
+        }
+    }
+</script>

@@ -1,0 +1,34 @@
+html, body, iframe { 
+    width:100%; 
+    height:100%; 
+    margin:0; 
+    padding:0;
+}
+
+iframe {
+    border: 0;
+    overflow: hidden;
+}
+
+#borderContainer { 
+    width:100%; 
+    height:100% 
+}
+
+.bookTitle{
+    margin: 5px;
+    font-weight: bold;
+}
+
+.sample_menu .title {
+    font-weight: bold;
+    padding-left: 4px;
+}
+
+.CodeMirror {
+    font-size: 1.4em;
+}
+.CodeMirror-scroll {
+    height: 100%;
+    width: 100%;
+}

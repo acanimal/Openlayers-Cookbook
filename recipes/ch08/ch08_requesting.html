@@ -1,0 +1,41 @@
+<!-- Map DOM element -->
+<div id="ch08_requesting" style="width: 100%; height: 95%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch08_requesting");
+    var osm = new OpenLayers.Layer.OSM();
+    map.addLayer(osm);
+    
+    // Certer viewport
+    map.setCenter(new OpenLayers.LonLat(0,0), 2);
+    
+    // Create the vector layer
+    var vectorLayer = new OpenLayers.Layer.Vector("Points");
+    map.addLayer(vectorLayer);
+    
+    // Request points in JSON format, read and add to the vector layer as features.
+    OpenLayers.Request.GET({
+        url: "utils/points.php",
+        params: {
+            num: 300
+        },
+        success: function(response) {
+            var format = new OpenLayers.Format.JSON();
+            var points = format.read(response.responseText);
+            for(var i=0; i< points.length; i++) {
+                var p = new OpenLayers.Geometry.Point(points[i].x, points[i].y);
+                p.transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
+                
+                var f = new OpenLayers.Feature.Vector(p);
+                vectorLayer.addFeatures([f]);
+            }
+        },
+        failure: function(response) {
+            alert("Sorry, there was an error requesting data !!!");
+        }
+    });
+    
+</script>

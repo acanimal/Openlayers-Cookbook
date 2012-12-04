@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Creating a simple map</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <!-- Include OpenLayers library -->
+        <script type="text/javascript" src="../../js/OpenLayers-2.11/lib/OpenLayers.js"></script>
+        <!-- OpenLayers Theme -->
+        <link rel="stylesheet" href="../../js/OpenLayers-2.11/theme/default/style.css" type="text/css">
+        <style>
+            html, body {
+                width: 100%; 
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+
+        <!-- The magic comes here -->
+        <script type="text/javascript">
+            function init() {
+                // Create the map using the specified DOM element
+                var map = new OpenLayers.Map("rcp1_map");
+    
+                // Create an OpenStreeMap raster layer and add to the map
+                var osm = new OpenLayers.Layer.OSM();
+                map.addLayer(osm);
+    
+                // Set view to zoom maximum map extent
+                map.zoomToMaxExtent();
+            }
+        </script>
+    </head>
+    <body onload="init()">
+        <div id="rcp1_map" style="width: 100%; height: 100%;"></div>
+    </body>
+</html>

@@ -1,0 +1,78 @@
+<!-- Map DOM element -->
+<table style="width: 100%; height: 95%;">
+    <tr>
+        <td style="width: 50%;">
+            <p>
+                WMS layer with <em>buffer</em>: <input id="buffer_a" 
+                                                       data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                                       data-dojo-props="value:0, smallDelta:1, constraints:{min:0,max:5}, intermediateChanges:true"
+                                                       onChange="changeBufferA" />
+            </p>
+            <div id="ch02_wms_buffer" style="width: 100%; height: 100%;"></div>
+        </td>
+        <td style="width: 50%;">
+            <p>
+                WMS using <em>singleTile</em> property and <em>ratio</em>: <input id="buffer_b" 
+                                                                                  data-dojo-type="dijit/form/NumberSpinner" style="width:100px"
+                                                                                  data-dojo-props="value:1, smallDelta:1, constraints:{min:0,max:3}, intermediateChanges:true"
+                                                                                  onChange="changeBufferB" />
+            </p>
+            <div id="ch02_wms_ratio" style="width: 100%; height: 100%;"></div>
+        </td>
+    </tr>
+</table>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map_a = new OpenLayers.Map("ch02_wms_buffer");    
+    
+    // Add a WMS layer
+    var wms_a = new OpenLayers.Layer.WMS("Basic", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: 'basic'
+    },
+    {
+        buffer: 0
+    });
+    map_a.addLayer(wms_a);
+    
+    // Set the center of the view
+    map_a.setCenter(new OpenLayers.LonLat(-90,0), 3);
+    
+    // Create the map using the specified DOM element
+    var map_b = new OpenLayers.Map("ch02_wms_ratio");    
+    
+    // Add a WMS layer
+    var wms_b = new OpenLayers.Layer.WMS("Basic", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: 'basic'
+    },
+    {
+        singleTile: true,
+        ratio: 1
+    });
+    map_b.addLayer(wms_b);
+    
+    // Set the center of the view
+    map_b.setCenter(new OpenLayers.LonLat(-90,0), 3);
+    
+    // Handle events
+    function changeBufferA(value) {
+        wms_a.addOptions({buffer: value});
+    }
+    function changeBufferB(value) {
+        map_b.removeLayer(wms_b);
+        wms_b.destroy();
+        wms_b = new OpenLayers.Layer.WMS("Basic", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+        {
+            layers: 'basic'
+        },
+        {
+            singleTile: true,
+            ratio: value
+        });
+        map_b.addLayer(wms_b);
+    }
+</script>

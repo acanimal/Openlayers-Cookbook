@@ -1,0 +1,69 @@
+<button data-dojo-type="dijit/form/Button" data-dojo-props="onClick: geolocationClick">Geolocation</button>
+
+<div id="ch05_geolocating" style="width: 100%; height: 90%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+    // Create map
+    var map = new OpenLayers.Map("ch05_geolocating");    
+    var osm = new OpenLayers.Layer.OSM();        
+    map.addLayer(osm);
+    
+    // Add controls
+    var geolocate = new OpenLayers.Control.Geolocate({
+        eventListeners: {
+            "locationupdated": locateMarker,
+            "locationfailed": function() {
+                console.log('Location detection failed');
+            }
+        }
+    });
+    map.addControl(geolocate);
+    
+    var markers = new OpenLayers.Layer.Markers("Markers");
+    map.addLayer(markers);
+    
+    map.setCenter(new OpenLayers.LonLat(0, 0), 6);
+
+    function geolocationClick() {
+        geolocate.deactivate();
+        geolocate.activate();
+    }
+    
+    function locateMarker(event) {
+        // Remove any existing marker
+        markers.clearMarkers();
+        
+        var size = new OpenLayers.Size(32, 37);
+        var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+        var icon = new OpenLayers.Icon('./recipes/data/icons/symbol_blank.png', size, offset);
+        icon.setOpacity(0.7);
+        
+        // Create a lonlat instance from the event location.
+        // NOTE: The coordinates are transformed to the map's projection by
+        // the geolocate control.
+        var lonlat = new OpenLayers.LonLat(event.point.x, event.point.y);
+        
+        // Add the marker
+        var popup = null;
+        var marker = new OpenLayers.Marker(lonlat, icon);
+        marker.events.on({
+            "mouseover": function() {
+                if(popup) {
+                    map.removePopup(popup);
+                }
+                
+                var content = "<strong>Longitude:</strong> " + lonlat.lon + "<br/>" +
+                    "<strong>Latitude:</strong> " + lonlat.lat;
+            
+                popup = new OpenLayers.Popup.FramedCloud(
+                "popup", lonlat, new OpenLayers.Size(250, 100), content,
+                null, true, null);
+                
+                map.addPopup(popup);
+            }
+        });
+        
+        markers.addMarker(marker);
+    }
+</script>

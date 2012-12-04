@@ -1,0 +1,55 @@
+<button data-dojo-type="dijit/form/ToggleButton" id="featureInfoButton" onChange="featureInfoChange" 
+        data-dojo-props="iconClass:'dijitCheckBoxIcon', checked:false">Activated</button>
+
+<div id="ch05_wmsfeatureinfo" style="width: 100%; height: 100%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+    OpenLayers.ProxyHost = "./utils/proxy.php?url=";
+    
+    // Create map
+    var map = new OpenLayers.Map("ch05_wmsfeatureinfo");    
+    // Add a WMS layer
+    var wms = new OpenLayers.Layer.WMS("Basic", "http://demo.opengeo.org/geoserver/wms",
+    {
+        layers: 'topp:naturalearth'
+    });
+    map.addLayer(wms);
+     var wms2 = new OpenLayers.Layer.WMS("Basic", "http://demo.opengeo.org/geoserver/wms",
+    {
+        layers: 'topp:states',
+        transparent: true
+    },{
+        isBaseLayer: false
+    });
+    map.addLayer(wms2);
+    
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+    map.setCenter(new OpenLayers.LonLat(-90, 40), 4);
+
+    var featureInfo = new OpenLayers.Control.WMSGetFeatureInfo({
+        url: 'http://demo.opengeo.org/geoserver/wms', 
+        queryVisible: true,
+        eventListeners: {
+            "getfeatureinfo": function(event) {
+                map.addPopup(new OpenLayers.Popup.FramedCloud(
+                "chicken", 
+                map.getLonLatFromPixel(event.xy),
+                null,
+                event.text,
+                null,
+                true
+            ));
+            }
+        }
+    });
+    map.addControl(featureInfo);
+    
+    function featureInfoChange(checked) {
+        if(checked) {
+            featureInfo.activate();
+        } else {
+            featureInfo.deactivate();
+        }
+    }
+</script>

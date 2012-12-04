@@ -1,0 +1,35 @@
+<!-- Map DOM element -->
+<div id="ch08_selecting" style="width: 100%; height: 95%;"></div>
+
+<script type="text/javascript" src="./recipes/ch08/selectFeaturePath.js"></script>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch08_selecting");
+    
+    var osm = new OpenLayers.Layer.OSM();
+    map.addLayer(osm);
+    
+    // Certer viewport
+    var center = new OpenLayers.LonLat(25,50);
+    center.transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
+    map.setCenter(center, 4);
+  
+    // Create the vector layer
+    var vectorLayer = new OpenLayers.Layer.Vector("Europe", {
+        protocol: new OpenLayers.Protocol.HTTP({
+            url: "./recipes/data/europe.gml",
+            format: new OpenLayers.Format.GML()
+        }),
+        strategies: [new OpenLayers.Strategy.Fixed()]
+    });
+    map.addLayer(vectorLayer);
+                
+    // Create the control, add to the map and activate it    
+    var sp = new OpenLayers.Control.SelectFeaturePath(vectorLayer);
+    map.addControl(sp);
+    sp.activate();
+    
+</script>

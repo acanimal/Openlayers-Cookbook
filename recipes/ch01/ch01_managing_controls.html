@@ -1,0 +1,59 @@
+<div class="sample_menu" data-dojo-type="dijit/MenuBar">
+    <span class="title">Controls: </span>
+    <div data-dojo-type="dijit/form/ToggleButton" data-dojo-props="iconClass:'dijitCheckBoxIcon'" onChange="updateMousePosition">MousePosition</div>
+    <div data-dojo-type="dijit/form/ToggleButton" data-dojo-props="iconClass:'dijitCheckBoxIcon'" onChange="updatePanPanel">PanPanel</div>
+    <div data-dojo-type="dijit/form/ToggleButton" data-dojo-props="iconClass:'dijitCheckBoxIcon'" onChange="updateZoomPanel">ZoomPanel</div>
+</div>
+<!-- Map DOM element -->
+<div id="ch1_managing_controls" style="width: 100%; height: 500px;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch1_managing_controls", {
+        controls: [
+            new OpenLayers.Control.Navigation()
+        ]
+    });
+    
+    // Add a WMS layer
+    var wms = new OpenLayers.Layer.WMS("OpenLayers WMS Basic", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: 'basic'
+    },
+    {
+        wrapDateLine: false
+    });
+    map.addLayer(wms);
+    
+    map.setCenter(OpenLayers.LonLat.fromString("0,0"),3);
+       
+    // Update control functions
+    function updateMousePosition(checked) {
+        if(checked) {
+            map.addControl(new OpenLayers.Control.MousePosition());
+        } else {
+            var controls = map.getControlsByClass("OpenLayers.Control.MousePosition");
+            console.log(controls);
+            map.removeControl(controls[0]);
+        }
+    }
+    function updatePanPanel(checked) {
+        if(checked) {
+            map.addControl(new OpenLayers.Control.PanPanel());
+        } else {
+            var controls = map.getControlsByClass("OpenLayers.Control.PanPanel");
+            map.removeControl(controls[0]);
+        }
+    }
+    function updateZoomPanel(checked) {
+        if(checked) {
+            // Place Zoom control at specified pixel
+            map.addControl(new OpenLayers.Control.ZoomPanel(), new OpenLayers.Pixel(50,10));
+        } else {
+            var controls = map.getControlsByClass("OpenLayers.Control.ZoomPanel");
+            map.removeControl(controls[0]);
+        }
+    }
+</script>

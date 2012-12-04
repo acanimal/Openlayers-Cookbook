@@ -1,0 +1,46 @@
+<!-- Map DOM element -->
+<table style="width: 100%; height: 95%;">
+    <tr>
+        <td style="width: 50%;">
+            <p>WMS layer:</p>
+            <div id="ch02_wms_non_singleTile" style="width: 100%; height: 100%;"></div>
+        </td>
+        <td style="width: 50%;">
+            <p>WMS using <em>singleTile</em> property:</p>
+            <div id="ch02_wms_singleTile" style="width: 100%; height: 100%;"></div>
+        </td>
+    </tr>
+</table>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map_a = new OpenLayers.Map("ch02_wms_non_singleTile");    
+    
+    // Add a WMS layer
+    var wms = new OpenLayers.Layer.WMS("Basic", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: 'basic'
+    });
+    map_a.addLayer(wms);
+    
+    // Set the center of the view
+    map_a.setCenter(new OpenLayers.LonLat(-90,0), 2);
+    
+    // Create the map using the specified DOM element
+    var map_b = new OpenLayers.Map("ch02_wms_singleTile");    
+    
+    // Add a WMS layer
+    var wms = new OpenLayers.Layer.WMS("Basic", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: 'basic'
+    },
+    {
+        singleTile: true
+    });
+    map_b.addLayer(wms);
+    
+    // Set the center of the view
+    map_b.setCenter(new OpenLayers.LonLat(-90,0), 2);
+</script>

@@ -1,0 +1,127 @@
+<div id="ch07_custom_rules" style="width: 100%; height: 95%;"></div>
+
+<script type="text/javascript">
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch07_custom_rules");
+    
+    var osm = new OpenLayers.Layer.OSM();
+    map.addLayer(osm);
+    
+    map.setCenter(new OpenLayers.LonLat(40,50).transform(new OpenLayers.Projection("EPSG:4326"), 
+    new OpenLayers.Projection("EPSG:900913")), 3);
+ 
+    // Define rules based on the features AREA attribute
+    var aRule = new OpenLayers.Rule({
+        filter: new OpenLayers.Filter.Comparison({
+            type: OpenLayers.Filter.Comparison.LESS_THAN,
+            property: "AREA",
+            value: 10000
+        }),
+        symbolizer: {
+            fillColor: "#EBC137",
+            fillOpacity: 0.5, 
+            strokeColor: "black"
+        }
+    });
+    
+    var bRule = new OpenLayers.Rule({
+        filter: new OpenLayers.Filter.Logical({
+            type: OpenLayers.Filter.Logical.AND,
+            filters: [
+                new OpenLayers.Filter.Comparison({
+                    type: OpenLayers.Filter.Comparison.GREATER_THAN,
+                    property: "AREA",
+                    value: 10000
+                }),
+                new OpenLayers.Filter.Comparison({
+                    type: OpenLayers.Filter.Comparison.LESS_THAN_OR_EQUAL_TO,
+                    property: "AREA",
+                    value: 25000
+                })
+            ]
+        }),
+        symbolizer: {
+            fillColor: "#E38C2D",
+            fillOpacity: 0.7, 
+            strokeColor: "black"
+        }
+    });
+    
+    var cRule = new OpenLayers.Rule({
+        filter: new OpenLayers.Filter.Logical({
+            type: OpenLayers.Filter.Logical.AND,
+            filters: [
+                new OpenLayers.Filter.Comparison({
+                    type: OpenLayers.Filter.Comparison.GREATER_THAN,
+                    property: "AREA",
+                    value: 25000
+                }),
+                new OpenLayers.Filter.Comparison({
+                    type: OpenLayers.Filter.Comparison.LESS_THAN_OR_EQUAL_TO,
+                    property: "AREA",
+                    value: 50000
+                })
+            ]
+        }),
+        symbolizer: {
+            fillColor: "#DB4C2C",
+            fillOpacity: 0.7, 
+            strokeColor: "black"
+        }
+    });
+    
+    var dRule = new OpenLayers.Rule({
+        filter: new OpenLayers.Filter.Logical({
+            type: OpenLayers.Filter.Logical.AND,
+            filters: [
+                new OpenLayers.Filter.Comparison({
+                    type: OpenLayers.Filter.Comparison.GREATER_THAN,
+                    property: "AREA",
+                    value: 50000
+                }),
+                new OpenLayers.Filter.Comparison({
+                    type: OpenLayers.Filter.Comparison.LESS_THAN_OR_EQUAL_TO,
+                    property: "AREA",
+                    value: 100000
+                })
+            ]
+        }),
+        symbolizer: {
+            fillColor: "#771E10",
+            fillOpacity: 0.7, 
+            strokeColor: "black"
+        }
+    });
+    
+    var eRule = new OpenLayers.Rule({
+        filter: new OpenLayers.Filter.Comparison({
+            type: OpenLayers.Filter.Comparison.GREATER_THAN_OR_EQUAL_TO,
+            property: "AREA",
+            value: 100000
+        }),
+        symbolizer: {
+            fillColor: "#48110C",
+            fillOpacity: 0.7, 
+            strokeColor: "black"
+        }
+    });
+    
+    // Create the Style with the custom rules
+    var style = new OpenLayers.Style();
+    style.addRules([aRule, bRule, cRule, dRule, eRule]);
+    
+    var format = new OpenLayers.Format.SLD();
+    console.log(format.write(style));
+    
+ 
+    // Add a layer the layer that use the defined Style
+    map.addLayer(new OpenLayers.Layer.Vector("World Cities (GeoJSON)", {
+        protocol: new OpenLayers.Protocol.HTTP({
+            url: "./recipes/data/europe.gml",
+            format: new OpenLayers.Format.GML()
+        }),
+        styleMap: new OpenLayers.StyleMap(style),
+        strategies: [new OpenLayers.Strategy.Fixed()]
+    }));
+    
+</script>

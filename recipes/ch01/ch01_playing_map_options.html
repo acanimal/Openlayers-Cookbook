@@ -1,0 +1,34 @@
+<!-- Map DOM element -->
+<div id="ch1_map_options" style="width: 100%; height: 95%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Define some map options
+    var options = {
+        div: "ch1_map_options",
+        projection: "EPSG:4326",
+        units: "degrees",
+        displayProjection: new OpenLayers.Projection("EPSG:900913"),
+        numZoomLevels: 7
+    };
+    
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map(options);
+    
+    // Add a WMS layer. 
+    // Note by deault it will use the Map's projection in the WMS requests
+    var wms = new OpenLayers.Layer.WMS("OpenLayers WMS Basic", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: 'basic'
+    });
+    map.addLayer(wms);
+    
+    // Show position
+    map.addControl(new OpenLayers.Control.MousePosition());
+    
+    // Set view to zoom maximum map extent
+    // NOTE: This will fail if there is no base layer defined
+    map.setCenter(new OpenLayers.LonLat(0, 40), 4);
+        
+</script>

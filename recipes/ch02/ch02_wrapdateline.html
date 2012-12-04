@@ -1,0 +1,30 @@
+Wrap date line: <input data-dojo-type="dijit/form/CheckBox" data-dojo-props="checked:true" onChange="wrapDateLine" /> <br/>
+
+<!-- Map DOM element -->
+<div id="ch2_wrapdataline" style="width: 100%; height: 100%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch2_wrapdataline");
+    
+    // Add a WMS layer
+    var wms = new OpenLayers.Layer.WMS("OpenLayers WMS Basic", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: 'basic'
+    },
+    {
+        wrapDateLine: true
+    });
+    map.addLayer(wms);   
+    
+    // Center map view
+    map.setCenter(new OpenLayers.LonLat(-110,0), 2);
+    
+    function wrapDateLine(checked) {
+        wms.wrapDateLine = checked;
+        wms.redraw();
+    }
+    
+</script>

@@ -1,0 +1,34 @@
+<!-- Map DOM element -->
+<div id="ch2_tilesize" style="width: 100%; height: 100%;"></div>
+
+<!-- The magic comes here -->
+<script type="text/javascript">
+
+    // Create the map using the specified DOM element
+    var map = new OpenLayers.Map("ch2_tilesize", {
+        allOverlays: true,
+        tileSize: new OpenLayers.Size(256, 256)
+    });
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+    
+    // Add WMs layer
+    var wms1 = new OpenLayers.Layer.WMS("OpenLayers WMS Basic", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: 'basic'
+    });
+    map.addLayer(wms1);
+    
+    var wms2 = new OpenLayers.Layer.WMS("Coast Line", "http://vmap0.tiles.osgeo.org/wms/vmap0",
+    {
+        layers: 'coastline_01,coastline_02'
+    },
+    {
+        tileSize: new OpenLayers.Size(512, 512),
+        opacity: 0.65
+    });
+    map.addLayer(wms2); 
+    
+    // Center the view
+    map.setCenter(new OpenLayers.LonLat(-85, 40), 3);
+    
+</script>

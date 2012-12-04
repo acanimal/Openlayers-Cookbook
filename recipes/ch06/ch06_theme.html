@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Creating a new OpenLayers theme</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <!-- Include OpenLayers library -->
+        <script type="text/javascript" src="../../js/OpenLayers-2.12/OpenLayers.js"></script>
+
+        <!-- OpenLayers Theme -->
+        <link rel="stylesheet" href="../../js/OpenLayers-2.12/theme/default/style.css" type="text/css">
+
+        <!-- Out customer Green Theme -->
+        <link rel="stylesheet" href="../data/green_theme/style.css" type="text/css">
+        <style>
+            html, body {
+                width: 100%; 
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            .historyClass {
+                position: absolute;
+                top: 5px;
+                right: 125px;
+                z-index: 9999;
+            }
+        </style>
+
+        <script type="text/javascript">
+            OpenLayers.ImgPath = "../data/green_img/";
+            
+            function init() {
+                // Create map
+                var map = new OpenLayers.Map("ch06_theme", {
+                    controls: []
+                });    
+                var osm = new OpenLayers.Layer.OSM();        
+                map.addLayer(osm);
+                map.setCenter(new OpenLayers.LonLat(0, 0), 2);
+    
+                var vectorLayer = new OpenLayers.Layer.Vector("Vector Layer");
+                map.addLayer(vectorLayer);
+    
+                // Add controls
+                map.addControl(new OpenLayers.Control.Navigation());
+                map.addControl(new OpenLayers.Control.LayerSwitcher({roundedCorner: false}));
+                map.addControl(new OpenLayers.Control.PanZoomBar({zoomWorldIcon: true}));
+                map.addControl(new OpenLayers.Control.MousePosition());
+                map.addControl(new OpenLayers.Control.OverviewMap());
+                map.addControl(new OpenLayers.Control.Scale());
+                map.addControl(new OpenLayers.Control.ScaleLine());
+                map.addControl(new OpenLayers.Control.Permalink());
+                map.addControl(new OpenLayers.Control.EditingToolbar(vectorLayer));
+    
+                var history = new OpenLayers.Control.NavigationHistory();
+                var panel = new OpenLayers.Control.Panel({
+                    div: document.getElementById('history')
+                });
+                panel.addControls([history.next, history.previous]);
+                map.addControls([history, panel]);
+            }
+        </script>
+
+    </head>
+    <body onload="init()">
+        <div id="ch06_theme" style="width: 100%; height: 100%;"></div>
+        <div id="history" class="historyClass"></div>
+    </body>
+</html>
