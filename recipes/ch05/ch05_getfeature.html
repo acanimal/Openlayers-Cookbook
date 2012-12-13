@@ -35,7 +35,7 @@ Europe <input id="europe" data-dojo-type="dijit/form/RadioButton" onChange="chan
     // Add a vector layer for Europe countries from a GML
     var europeLayer = new OpenLayers.Layer.Vector("Europe (GML)", {
         protocol: new OpenLayers.Protocol.HTTP({
-            url: "http://localhost:8080/Openlayers-Cookbook/recipes/data/europe.gml",
+            url: "./recipes/data/europe.gml",
             format: new OpenLayers.Format.GML()
         }),
         strategies: [new OpenLayers.Strategy.Fixed()]
