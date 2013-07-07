@@ -33,7 +33,7 @@ To run the code samples of the book you need HTTP server with PHP support.
 PHP is only required for those recipes that load content via AJAX (like WFS), 
 so you can run many of them on a server without PHP support.
 
-### Intallation
+### Installation
 
 Copy the project folder within your HTTP server and open the 'index.html' file,
 for example, accessing: `http://localhost:8080/openlayers-cookbook/index.html`.
